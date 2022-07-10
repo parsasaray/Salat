@@ -16,13 +16,16 @@ class TableDataSource: NSObject, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "salatCell") as! Cell
-        let sunStrings: [String] = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
+        let textStrings: [String] = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm"
+        dateFormatter.timeZone = desiredTimeZone
         
-        cell.nameLabel.text = sunStrings[indexPath.row]
-        cell.timeLabel.text = dateFormatter.string(from: sunTimes[sunStrings[indexPath.row]]!)
+        cell.nameLabel.text = textStrings[indexPath.row]
+        cell.nameLabel.textColor = UIColor(named: textStrings[indexPath.row])
+        cell.timeLabel.text = dateFormatter.string(from: sunTimes[textStrings[indexPath.row]]!)
+        cell.backgroundColor = .clear
            
         return cell
     }

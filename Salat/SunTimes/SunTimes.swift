@@ -32,7 +32,7 @@ public class SunTimes {
     }
     
     private func fromJulian(j: Double) -> Date {
-        return Date(milliseconds: Int((j + 0.5 - J1970) * dayMS))
+        return Date(milliseconds: (j + 0.5 - J1970) * dayMS)
     }
     
     private func toJulian(date: Date) -> Double {
@@ -122,7 +122,7 @@ fileprivate extension Date {
         return Int((self.timeIntervalSince1970 * 1000.0).rounded())
     }
     
-    init(milliseconds: Int) {
+    init(milliseconds: Double) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds / 1000))
     }
 }

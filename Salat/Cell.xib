@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,26 +15,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLT-Zu-ymU">
-                        <rect key="frame" x="50" y="10" width="71" height="24"/>
-                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLT-Zu-ymU">
+                        <rect key="frame" x="25" y="4" width="231.5" height="36"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-ei-mgi">
-                        <rect key="frame" x="316.5" y="10" width="47.5" height="24"/>
-                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-ei-mgi">
+                        <rect key="frame" x="256.5" y="7" width="132.5" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                        <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="ccb-ei-mgi" secondAttribute="trailing" constant="50" id="5UZ-s4-P6Q"/>
-                    <constraint firstAttribute="bottom" secondItem="qLT-Zu-ymU" secondAttribute="bottom" constant="10" id="ARC-dy-3vq"/>
-                    <constraint firstItem="qLT-Zu-ymU" firstAttribute="top" secondItem="fcJ-BK-mkv" secondAttribute="top" constant="10" id="OeS-K8-yhI"/>
-                    <constraint firstItem="qLT-Zu-ymU" firstAttribute="leading" secondItem="fcJ-BK-mkv" secondAttribute="leading" constant="50" id="REH-Ry-ozo"/>
-                    <constraint firstAttribute="bottom" secondItem="ccb-ei-mgi" secondAttribute="bottom" constant="10" id="l3V-nS-Z74"/>
-                    <constraint firstItem="ccb-ei-mgi" firstAttribute="top" secondItem="fcJ-BK-mkv" secondAttribute="top" constant="10" id="nNH-Tu-6JO"/>
+                    <constraint firstAttribute="trailing" secondItem="ccb-ei-mgi" secondAttribute="trailing" constant="25" id="5UZ-s4-P6Q"/>
+                    <constraint firstItem="ccb-ei-mgi" firstAttribute="leading" secondItem="qLT-Zu-ymU" secondAttribute="trailing" id="A7S-To-eSf"/>
+                    <constraint firstItem="qLT-Zu-ymU" firstAttribute="width" secondItem="ccb-ei-mgi" secondAttribute="width" multiplier="1.75" id="LZf-xF-tKz"/>
+                    <constraint firstItem="ccb-ei-mgi" firstAttribute="centerY" secondItem="fcJ-BK-mkv" secondAttribute="centerY" id="PUi-TR-m2D"/>
+                    <constraint firstItem="qLT-Zu-ymU" firstAttribute="leading" secondItem="fcJ-BK-mkv" secondAttribute="leading" constant="25" id="REH-Ry-ozo"/>
+                    <constraint firstItem="qLT-Zu-ymU" firstAttribute="centerY" secondItem="fcJ-BK-mkv" secondAttribute="centerY" id="ooZ-CM-990"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="nameLabel" destination="qLT-Zu-ymU" id="Ioo-9K-VK1"/>
                 <outlet property="timeLabel" destination="ccb-ei-mgi" id="Wsp-yR-CaV"/>
