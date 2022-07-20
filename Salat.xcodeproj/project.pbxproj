@@ -75,11 +75,13 @@
 		ED0984D6262268610001D211 /* Salat */ = {
 			isa = PBXGroup;
 			children = (
+				ED46D40C2623DF9C00EB2E1C /* Libraries */,
+				ED0984D7262268610001D211 /* AppDelegate.swift */,
+				ED0984D9262268610001D211 /* SceneDelegate.swift */,
 				ED0984DB262268610001D211 /* ViewController.swift */,
 				EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */,
-				ED3D5FFC2674843B00352600 /* TableView */,
-				ED46D40C2623DF9C00EB2E1C /* SunTimes */,
-				ED3D60032675E95600352600 /* Delegates */,
+				ED3D6005267C086F00352600 /* TableDataSource.swift */,
+				ED3D5FFF2674847E00352600 /* Cell.xib */,
 				ED0984E0262268610001D211 /* Assets.xcassets */,
 				ED0984E2262268610001D211 /* LaunchScreen.storyboard */,
 				ED0984E5262268610001D211 /* Info.plist */,
@@ -87,30 +89,12 @@
 			path = Salat;
 			sourceTree = "<group>";
 		};
-		ED3D5FFC2674843B00352600 /* TableView */ = {
-			isa = PBXGroup;
-			children = (
-				ED3D6005267C086F00352600 /* TableDataSource.swift */,
-				ED3D5FFF2674847E00352600 /* Cell.xib */,
-			);
-			name = TableView;
-			sourceTree = "<group>";
-		};
-		ED3D60032675E95600352600 /* Delegates */ = {
-			isa = PBXGroup;
-			children = (
-				ED0984D7262268610001D211 /* AppDelegate.swift */,
-				ED0984D9262268610001D211 /* SceneDelegate.swift */,
-			);
-			name = Delegates;
-			sourceTree = "<group>";
-		};
-		ED46D40C2623DF9C00EB2E1C /* SunTimes */ = {
+		ED46D40C2623DF9C00EB2E1C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				ED46D40D2623DFB400EB2E1C /* SunTimes.swift */,
 			);
-			path = SunTimes;
+			path = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

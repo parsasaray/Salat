@@ -17,6 +17,7 @@ class TableDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "salatCell") as! Cell
         let textStrings: [String] = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
+        let sunTimes: [String: Date] = SunTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm"

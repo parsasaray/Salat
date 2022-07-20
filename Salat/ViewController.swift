@@ -26,9 +26,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(named: "Background")
+        locationManager.delegate = locationDelegate
         
         salatTableView.register(UINib(nibName: "Cell", bundle: nil), forCellReuseIdentifier: "salatCell")
+        salatTableView.dataSource = tableDataSource
         salatTableView.isUserInteractionEnabled = false
         salatTableView.rowHeight = self.view.frame.height / 12
         salatTableView.separatorStyle = .none
@@ -118,25 +119,6 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(false)
         
-        locationManager.requestWhenInUseAuthorization()
-        if locationManager.authorizationStatus == .authorizedWhenInUse {
-            createResetLocationButton()
-            locationManager.delegate = locationDelegate
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.headingOrientation = .portrait
-            locationManager.startMonitoringSignificantLocationChanges()
-            locationManager.startUpdatingHeading()
-        } else {
-            let dialogMessage = UIAlertController(title: "No Location Found", message: "Location is required to use this app.", preferredStyle: .alert)
-            dialogMessage.addAction(UIAlertAction(title: "Select Location", style: .default, handler: { (action) -> Void in
-                self.pickLocation()
-            }))
-            dialogMessage.addAction(UIAlertAction(title: "Enable Location", style: .default, handler: { (action) -> Void in
-                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-            }))
-            self.present(dialogMessage, animated: true, completion: nil)
-        }
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d, YYYY"
         setDateButton.setTitle(dateFormatter.string(from: desiredDate), for: .normal)
@@ -180,7 +162,6 @@ class ViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d, YYYY"
         setDateButton.setTitle(dateFormatter.string(from: desiredDate), for: .normal)
-        sunTimes = SunTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
         salatTableView.reloadData()
     }
     
@@ -197,27 +178,26 @@ class ViewController: UIViewController {
     }
     
     @objc func locationPicked(_ gesture: UIGestureRecognizer) {
-        let touchPoint = gesture.location(in: locationPicker)
-        let touchCoords = locationPicker.convert(touchPoint, toCoordinateFrom: locationPicker)
-        desiredLocation = CLLocationCoordinate2D(latitude: touchCoords.latitude, longitude: touchCoords.longitude)
-        
-        locationDelegate.setkaabaBearing()
-        locationDelegate.setLocationName()
-        let numberFormatter = NumberFormatter()
-        numberFormatter.usesSignificantDigits = true
-        numberFormatter.maximumSignificantDigits = 4
-        if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
-            angleLabel.text = angle + "°"
+        if gesture.state == .began {
+            let touchPoint = gesture.location(in: locationPicker)
+            let touchCoords = locationPicker.convert(touchPoint, toCoordinateFrom: locationPicker)
+            desiredLocation = CLLocationCoordinate2D(latitude: touchCoords.latitude, longitude: touchCoords.longitude)
+            
+            LocationDelegate().setkaabaBearing()
+            LocationDelegate().setLocationName()
+            let numberFormatter = NumberFormatter()
+            numberFormatter.usesSignificantDigits = true
+            numberFormatter.maximumSignificantDigits = 4
+            if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
+                angleLabel.text = angle + "°"
+            }
+            
+            locationPicker.removeAnnotations(locationPicker.annotations)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = desiredLocation
+            locationPicker.addAnnotation(annotation)
+            salatTableView.reloadData()
         }
-        
-        
-        locationPicker.removeAnnotations(locationPicker.annotations)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = desiredLocation
-        locationPicker.addAnnotation(annotation)
-        
-        sunTimes = SunTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
-        salatTableView.reloadData()
     }
 }
 

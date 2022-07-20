@@ -9,6 +9,7 @@ import CoreLocation
 import MapKit
 
 let locationDelegate = LocationDelegate()
+
 var desiredDate = Date()
 var desiredLocation = CLLocationCoordinate2D()
 var desiredTimeZone = TimeZone(identifier: "UTC")
@@ -16,12 +17,38 @@ let kaabaLocation = CLLocationCoordinate2D(latitude: 21.4225, longitude: 39.8262
 var kaabaBearing = CLLocationDirection()
 
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        case .authorizedAlways, .authorizedWhenInUse:
+            ViewController().createResetLocationButton()
+            Salat.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            Salat.locationManager.headingOrientation = .portrait
+            Salat.locationManager.startMonitoringSignificantLocationChanges()
+            Salat.locationManager.startUpdatingHeading()
+        case .restricted, .denied:
+            let dialogMessage = UIAlertController(title: "No Location Found", message: "Location is required to use this app.", preferredStyle: .alert)
+            dialogMessage.addAction(UIAlertAction(title: "Select Location", style: .default, handler: { (action) -> Void in
+                ViewController().pickLocation()
+            }))
+            dialogMessage.addAction(UIAlertAction(title: "Enable Location", style: .default, handler: { (action) -> Void in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }))
+            mainWindow?.rootViewController?.present(dialogMessage, animated: true, completion: nil)
+        @unknown default:
+            fatalError()
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         desiredLocation = locations.last?.coordinate ?? CLLocationCoordinate2D(latitude: 0.0000, longitude: 0.0000)
         desiredTimeZone = TimeZone.current
-        sunTimes = SunTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
         setkaabaBearing()
+        setLocationName()
+        salatTableView.reloadData()
         
+        locationPicker.removeAnnotations(locationPicker.annotations)
         let annotation = MKPointAnnotation()
         annotation.coordinate = desiredLocation
         locationPicker.addAnnotation(annotation)
@@ -32,11 +59,6 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
             angleLabel.text = angle + "°"
         }
-        
-        salatTableView.dataSource = tableDataSource
-        salatTableView.reloadData()
-        
-        setLocationName()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
@@ -79,7 +101,17 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
                 if let city = place.locality { location += city + ", " }
                 if let area = place.administrativeArea { location += area + " "}
                 if let country = place.isoCountryCode { location += country}
-                setLocationButton.setTitle(location, for: .normal)
+                if location != "" {
+                    setLocationButton.setTitle(location, for: .normal)
+                } else {
+                    let numberFormatter = NumberFormatter()
+                    numberFormatter.usesSignificantDigits = true
+                    numberFormatter.maximumSignificantDigits = 6
+                    if let latitude = numberFormatter.string(for: desiredLocation.latitude),
+                       let longitude = numberFormatter.string(for: desiredLocation.longitude) {
+                        setLocationButton.setTitle("\(latitude)°, \(longitude)°", for: .normal)
+                    }
+                }
             }
         }
     }
