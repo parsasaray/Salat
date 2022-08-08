@@ -2,39 +2,47 @@
 //  SalatTimes.swift
 //  Salat
 //
-//  Created by Parsa Saraydarpour on 4/10/21.
+//  Created by Vladimir Agafonkin
+//  Ported by Cristian Gonzales
+//  Modified by Parsa Saraydarpour
 //
 
 import Foundation
 
-var sunTimes = [String: Date]()
+var salatTimes = [String: Date]()
 
-public class SunTimes {
+public class SalatTimes {
     
+    // Simple Conventions
     internal let pi: Double = Double.pi
     internal let rad: Double = Double.pi/180
     
+    // Date VConversions
     internal let dayMS: Double = 1000.0 * 60.0 * 60.0 * 24.0
-    
     internal let J0: Double = 0.0009
     internal let J1970: Double = 2440588.0
     internal let J2000: Double = 2451545.0
     
+    // Obliquity of the Earth
     internal let e: Double = (Double.pi / 180.0) * 23.4397
     
+    // Time Configuration (Angle°, AM, PM)
     internal var listedtimes: [[Any]] = [
         [-18.0, "Dawn", "Night"],
         [-0.833, "Sunrise", "Sunset"]
     ]
     
+    // Convert Date to Day Count
     private func toDays(date: Date) -> Double {
         return toJulian(date: date) - J2000
     }
     
+    // Convert Julian to Date
     private func fromJulian(j: Double) -> Date {
         return Date(milliseconds: (j + 0.5 - J1970) * dayMS)
     }
     
+    // Convert Date to Julian
     private func toJulian(date: Date) -> Double {
         return Double(date.millisecondsSince1970) / dayMS - 0.5 + J1970
     }
@@ -77,6 +85,8 @@ public class SunTimes {
         return acos((sin(h) - sin(phi) * sin(dec)) / (cos(phi) * cos(dec)))
     }
     
+    
+    // Returns all Salat times in a dictionary for later use.
     public func getTimes(date: Date, lat: Double, lng: Double) -> Dictionary<String, Date> {
         let lw: Double = rad * -lng
         let phi: Double = rad * lat

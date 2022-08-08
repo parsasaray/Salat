@@ -12,9 +12,10 @@
 		ED0984DC262268610001D211 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0984DB262268610001D211 /* ViewController.swift */; };
 		ED0984E1262268610001D211 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED0984E0262268610001D211 /* Assets.xcassets */; };
 		ED0984E4262268610001D211 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED0984E2262268610001D211 /* LaunchScreen.storyboard */; };
+		ED387D9A28891FFF002DE53A /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED387D9928891FFF002DE53A /* TimelineView.swift */; };
 		ED3D60002674847E00352600 /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3D5FFF2674847E00352600 /* Cell.xib */; };
 		ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D6005267C086F00352600 /* TableDataSource.swift */; };
-		ED46D40E2623DFB400EB2E1C /* SunTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SunTimes.swift */; };
+		ED46D40E2623DFB400EB2E1C /* SalatTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */; };
 		EDAB1ED0278DFF8F00BBADBF /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,9 +40,10 @@
 		ED0984E0262268610001D211 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED0984E3262268610001D211 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED0984E5262268610001D211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED387D9928891FFF002DE53A /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		ED3D5FFF2674847E00352600 /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		ED3D6005267C086F00352600 /* TableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSource.swift; sourceTree = "<group>"; };
-		ED46D40D2623DFB400EB2E1C /* SunTimes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunTimes.swift; sourceTree = "<group>"; };
+		ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalatTimes.swift; sourceTree = "<group>"; };
 		EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,7 +94,8 @@
 		ED46D40C2623DF9C00EB2E1C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				ED46D40D2623DFB400EB2E1C /* SunTimes.swift */,
+				ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */,
+				ED387D9928891FFF002DE53A /* TimelineView.swift */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -169,9 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED0984DC262268610001D211 /* ViewController.swift in Sources */,
+				ED387D9A28891FFF002DE53A /* TimelineView.swift in Sources */,
 				ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */,
 				EDAB1ED0278DFF8F00BBADBF /* LocationDelegate.swift in Sources */,
-				ED46D40E2623DFB400EB2E1C /* SunTimes.swift in Sources */,
+				ED46D40E2623DFB400EB2E1C /* SalatTimes.swift in Sources */,
 				ED0984D8262268610001D211 /* AppDelegate.swift in Sources */,
 				ED0984DA262268610001D211 /* SceneDelegate.swift in Sources */,
 			);
@@ -312,6 +316,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.2;
 				DEVELOPMENT_TEAM = HV6243277V;
 				INFOPLIST_FILE = Salat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -332,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.2;
 				DEVELOPMENT_TEAM = HV6243277V;
 				INFOPLIST_FILE = Salat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

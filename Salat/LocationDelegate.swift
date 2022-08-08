@@ -17,16 +17,20 @@ let kaabaLocation = CLLocationCoordinate2D(latitude: 21.4225, longitude: 39.8262
 var kaabaBearing = CLLocationDirection()
 
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
+    
+    // Checks if the user allows location
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
+        // Asks for location permission
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
+        // Starts using location data
         case .authorizedAlways, .authorizedWhenInUse:
-            ViewController().createResetLocationButton()
             Salat.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             Salat.locationManager.headingOrientation = .portrait
             Salat.locationManager.startMonitoringSignificantLocationChanges()
             Salat.locationManager.startUpdatingHeading()
+        // Displays a popup explaining that location is disabled
         case .restricted, .denied:
             let dialogMessage = UIAlertController(title: "No Location Found", message: "Location is required to use this app.", preferredStyle: .alert)
             dialogMessage.addAction(UIAlertAction(title: "Select Location", style: .default, handler: { (action) -> Void in
@@ -41,12 +45,14 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // Updates the View when Device's location significantly changes
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         desiredLocation = locations.last?.coordinate ?? CLLocationCoordinate2D(latitude: 0.0000, longitude: 0.0000)
         desiredTimeZone = TimeZone.current
         setkaabaBearing()
         setLocationName()
         salatTableView.reloadData()
+        timelineView.setNeedsDisplay()
         
         locationPicker.removeAnnotations(locationPicker.annotations)
         let annotation = MKPointAnnotation()
@@ -61,6 +67,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // Updates the View when Device is rotated
     func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
         let kaabaDirection = kaabaBearing - heading.trueHeading.radians
         if kaabaDirection.degrees.rounded() == 0 {
@@ -79,20 +86,22 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         })
     }
     
+    // Calculates and Sets the bearing for the Kaaba to be displayed
     func setkaabaBearing() {
-        let distABx = pow((90 - desiredLocation.latitude), 2)
-        let distACx = pow((90 - kaabaLocation.latitude), 2)
-        let distBCx = pow((desiredLocation.latitude - kaabaLocation.latitude), 2)
+        // Point A is a point at the North Pole sharing the exact same Longitude as Point B
+        // Point B is the current location of the user
+        // Point C is the location of the Kaaba
+        // Together, these points create a ray with the vertex at B and each line towards A and C which we can calculate the angle from.
+        // https://stackoverflow.com/questions/1211212/how-to-calculate-an-angle-from-three-points
         
-        let distABy = pow((desiredLocation.longitude - desiredLocation.longitude), 2)
-        let distACy = pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
-        let distBCy = pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
+        let distAB = pow((90 - desiredLocation.latitude), 2) + pow((desiredLocation.longitude - desiredLocation.longitude), 2)
+        let distBC = pow((desiredLocation.latitude - kaabaLocation.latitude), 2) + pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
+        let distAC = pow((90 - kaabaLocation.latitude), 2) + pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
 
-        let e = (distABx + distABy + distBCx + distBCy - distACx - distACy)
-        let f = (2 * sqrt(distABx + distABy) * sqrt(distBCx + distBCy))
-        kaabaBearing = acos(e / f)
+        kaabaBearing = acos((distAB + distBC - distAC) / (2 * sqrt(distAB) * sqrt(distBC)))
     }
     
+    // Finds location name from coordinates using Apples API
     func setLocationName() {
         CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: desiredLocation.latitude, longitude: desiredLocation.longitude)) { (placemarks, error) in
             var location = String()

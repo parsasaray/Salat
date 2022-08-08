@@ -10,11 +10,11 @@ import CoreLocation
 import MapKit
 
 let salatTableView = UITableView(frame: .zero)
+let timelineView = TimelineView(frame: .zero)
 let compassImageView = UIImageView(frame: .zero)
 let angleLabel = UILabel(frame: .zero)
 let setLocationButton = UIButton(frame: .zero)
 let locationPicker = MKMapView(frame: .zero)
-let resetLocationButton = UIButton(frame: .zero)
 let setDateButton = UIButton(frame: .zero)
 let datePicker = UIDatePicker(frame: .zero)
 
@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     var datePickerTopAnchor: NSLayoutConstraint!
     var locationPickerTopAnchor: NSLayoutConstraint!
     
+    // Adds all visual elements to the View
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = locationDelegate
@@ -43,13 +44,23 @@ class ViewController: UIViewController {
             salatTableView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5)
         ])
         
+        timelineView.translatesAutoresizingMaskIntoConstraints = false
+        timelineView.backgroundColor = .clear
+        self.view.addSubview(timelineView)
+        NSLayoutConstraint.activate([
+            timelineView.topAnchor.constraint(equalTo: salatTableView.bottomAnchor, constant: 10),
+            timelineView.centerXAnchor.constraint(equalTo: salatTableView.centerXAnchor),
+            timelineView.widthAnchor.constraint(equalTo: salatTableView.widthAnchor),
+            timelineView.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
         compassImageView.image = UIImage(systemName: "arrow.up")
-        compassImageView.backgroundColor = UIColor(named: "Background")
+        compassImageView.backgroundColor = .clear
         compassImageView.tintColor = .label
         compassImageView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(compassImageView)
         NSLayoutConstraint.activate([
-            compassImageView.topAnchor.constraint(equalTo: salatTableView.bottomAnchor, constant: 10),
+            compassImageView.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 10),
             compassImageView.centerXAnchor.constraint(equalTo: salatTableView.centerXAnchor),
             compassImageView.widthAnchor.constraint(equalTo: salatTableView.widthAnchor, multiplier: 0.5),
             compassImageView.heightAnchor.constraint(equalTo: salatTableView.widthAnchor, multiplier: 0.5)
@@ -90,6 +101,7 @@ class ViewController: UIViewController {
         
         setDateButton.translatesAutoresizingMaskIntoConstraints = false
         setDateButton.setTitleColor(.label, for: .normal)
+        setDateButton.setTitle(desiredDate.formatted(date: .long, time: .omitted), for: .normal)
         setDateButton.addTarget(self, action: #selector(pickDate), for: .touchUpInside)
         self.view.addSubview(setDateButton)
         NSLayoutConstraint.activate([
@@ -116,35 +128,7 @@ class ViewController: UIViewController {
         ])
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(false)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d, YYYY"
-        setDateButton.setTitle(dateFormatter.string(from: desiredDate), for: .normal)
-    }
-    
-    func createResetLocationButton() {
-        resetLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        resetLocationButton.clipsToBounds = true
-        resetLocationButton.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
-        resetLocationButton.layer.cornerRadius = 5
-        resetLocationButton.setTitle("Reset", for: .normal)
-        resetLocationButton.setTitleColor(.label, for: .normal)
-        resetLocationButton.addTarget(self, action: #selector(resetLocation), for: .touchUpInside)
-        locationPicker.addSubview(resetLocationButton)
-        NSLayoutConstraint.activate([
-            resetLocationButton.topAnchor.constraint(equalTo: locationPicker.topAnchor, constant: 10),
-            resetLocationButton.leftAnchor.constraint(equalTo: locationPicker.leftAnchor, constant: 10)
-        ])
-    }
-    
-    @objc func resetLocation() {
-        if locationManager.authorizationStatus == .authorizedWhenInUse {
-            locationManager.startMonitoringSignificantLocationChanges()
-        }
-    }
-    
+    // Shows Date Picker on View
     @objc func pickDate() {
         locationPickerTopAnchor.constant = 0
         if datePickerTopAnchor.constant == 0 {
@@ -157,14 +141,15 @@ class ViewController: UIViewController {
         })
     }
     
+    // Assigns picked Date to be used later and updates View accordingly
     @objc func datePicked(_ sender: UIDatePicker) {
         desiredDate = sender.date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d, YYYY"
-        setDateButton.setTitle(dateFormatter.string(from: desiredDate), for: .normal)
+        setDateButton.setTitle(desiredDate.formatted(date: .long, time: .omitted), for: .normal)
         salatTableView.reloadData()
+        timelineView.setNeedsDisplay()
     }
     
+    // Shows Location Picker on View
     @objc func pickLocation() {
         datePickerTopAnchor.constant = 0
         if locationPickerTopAnchor.constant == 0 {
@@ -177,6 +162,7 @@ class ViewController: UIViewController {
         })
     }
     
+    // Assigns picked Location to be used later and updates View accordingly
     @objc func locationPicked(_ gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             let touchPoint = gesture.location(in: locationPicker)
@@ -197,6 +183,7 @@ class ViewController: UIViewController {
             annotation.coordinate = desiredLocation
             locationPicker.addAnnotation(annotation)
             salatTableView.reloadData()
+            timelineView.setNeedsDisplay()
         }
     }
 }

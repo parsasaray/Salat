@@ -10,14 +10,16 @@ import UIKit
 let tableDataSource = TableDataSource()
 
 class TableDataSource: NSObject, UITableViewDataSource {
+    // Generates row in TableView for each Salat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         6
     }
     
+    // Populates each generated row with the relevant Salat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "salatCell") as! Cell
         let textStrings: [String] = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
-        let sunTimes: [String: Date] = SunTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
+        let salatTimes: [String: Date] = SalatTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm"
@@ -25,7 +27,7 @@ class TableDataSource: NSObject, UITableViewDataSource {
         
         cell.nameLabel.text = textStrings[indexPath.row]
         cell.nameLabel.textColor = UIColor(named: textStrings[indexPath.row])
-        cell.timeLabel.text = dateFormatter.string(from: sunTimes[textStrings[indexPath.row]]!)
+        cell.timeLabel.text = dateFormatter.string(from: salatTimes[textStrings[indexPath.row]]!)
         cell.backgroundColor = .clear
            
         return cell
