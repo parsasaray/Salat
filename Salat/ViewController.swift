@@ -27,19 +27,18 @@ class ViewController: UIViewController {
     // Adds all visual elements to the View
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.delegate = locationDelegate
         
         salatTableView.register(UINib(nibName: "Cell", bundle: nil), forCellReuseIdentifier: "salatCell")
         salatTableView.dataSource = tableDataSource
         salatTableView.isUserInteractionEnabled = false
-        salatTableView.rowHeight = self.view.frame.height / 12
+        salatTableView.rowHeight = self.view.frame.height / (6/0.5)
         salatTableView.separatorStyle = .none
         salatTableView.backgroundColor = .clear
         salatTableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(salatTableView)
         NSLayoutConstraint.activate([
             salatTableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            salatTableView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -40),
+            salatTableView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -45),
             salatTableView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.75),
             salatTableView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.5)
         ])
@@ -60,7 +59,7 @@ class ViewController: UIViewController {
         compassImageView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(compassImageView)
         NSLayoutConstraint.activate([
-            compassImageView.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 10),
+            compassImageView.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 50),
             compassImageView.centerXAnchor.constraint(equalTo: salatTableView.centerXAnchor),
             compassImageView.widthAnchor.constraint(equalTo: salatTableView.widthAnchor, multiplier: 0.5),
             compassImageView.heightAnchor.constraint(equalTo: salatTableView.widthAnchor, multiplier: 0.5)
@@ -81,8 +80,7 @@ class ViewController: UIViewController {
         setLocationButton.addTarget(self, action: #selector(pickLocation), for: .touchUpInside)
         self.view.addSubview(setLocationButton)
         NSLayoutConstraint.activate([
-            setLocationButton.bottomAnchor.constraint(equalTo: salatTableView.topAnchor, constant: -30),
-            setLocationButton.widthAnchor.constraint(equalTo: salatTableView.widthAnchor),
+            setLocationButton.bottomAnchor.constraint(equalTo: salatTableView.topAnchor, constant: -55),
             setLocationButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
         
@@ -105,8 +103,7 @@ class ViewController: UIViewController {
         setDateButton.addTarget(self, action: #selector(pickDate), for: .touchUpInside)
         self.view.addSubview(setDateButton)
         NSLayoutConstraint.activate([
-            setDateButton.bottomAnchor.constraint(equalTo: setLocationButton.topAnchor, constant: -20),
-            setDateButton.widthAnchor.constraint(equalTo: salatTableView.widthAnchor),
+            setDateButton.bottomAnchor.constraint(equalTo: setLocationButton.topAnchor, constant: 5),
             setDateButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
         
@@ -126,6 +123,8 @@ class ViewController: UIViewController {
             datePicker.centerXAnchor.constraint(equalTo: salatTableView.centerXAnchor),
             datePickerTopAnchor
         ])
+        
+        locationManager.delegate = locationDelegate
     }
     
     // Shows Date Picker on View
@@ -168,22 +167,24 @@ class ViewController: UIViewController {
             let touchPoint = gesture.location(in: locationPicker)
             let touchCoords = locationPicker.convert(touchPoint, toCoordinateFrom: locationPicker)
             desiredLocation = CLLocationCoordinate2D(latitude: touchCoords.latitude, longitude: touchCoords.longitude)
-            
-            LocationDelegate().setkaabaBearing()
-            LocationDelegate().setLocationName()
-            let numberFormatter = NumberFormatter()
-            numberFormatter.usesSignificantDigits = true
-            numberFormatter.maximumSignificantDigits = 4
-            if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
-                angleLabel.text = angle + "°"
-            }
-            
             locationPicker.removeAnnotations(locationPicker.annotations)
             let annotation = MKPointAnnotation()
             annotation.coordinate = desiredLocation
             locationPicker.addAnnotation(annotation)
-            salatTableView.reloadData()
-            timelineView.setNeedsDisplay()
+            
+            LocationDelegate().setkaabaBearing() {
+                let numberFormatter = NumberFormatter()
+                numberFormatter.usesSignificantDigits = true
+                numberFormatter.maximumSignificantDigits = 4
+                if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
+                    angleLabel.text = angle + "°"
+                }
+            }
+
+            LocationDelegate().setLocationName() {
+                salatTableView.reloadData()
+                timelineView.setNeedsDisplay()
+            }
         }
     }
 }
