@@ -16,8 +16,24 @@
 		ED3D60002674847E00352600 /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3D5FFF2674847E00352600 /* Cell.xib */; };
 		ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D6005267C086F00352600 /* TableDataSource.swift */; };
 		ED46D40E2623DFB400EB2E1C /* SalatTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */; };
+		ED83A8092B81E8C800D87E27 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED83A8082B81E8C700D87E27 /* WidgetKit.framework */; };
+		ED83A80B2B81E8C800D87E27 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED83A80A2B81E8C800D87E27 /* SwiftUI.framework */; };
+		ED83A8122B81E8C800D87E27 /* Salat_Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED83A8112B81E8C800D87E27 /* Salat_Widget.swift */; };
+		ED83A8142B81E8CB00D87E27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED83A8132B81E8CB00D87E27 /* Assets.xcassets */; };
+		ED83A8182B81E8CB00D87E27 /* Salat WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ED83A8062B81E8C700D87E27 /* Salat WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EDAB1ED0278DFF8F00BBADBF /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */; };
+		EDAF8FEA2B8336DC0024976F /* SalatTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ED83A8162B81E8CB00D87E27 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ED0984CC262268610001D211 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ED83A8052B81E8C700D87E27;
+			remoteInfo = "Salat WidgetExtension";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		ED09851E262276040001D211 /* Embed Frameworks */ = {
@@ -28,6 +44,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED83A81C2B81E8CB00D87E27 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				ED83A8182B81E8CB00D87E27 /* Salat WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -44,6 +71,12 @@
 		ED3D5FFF2674847E00352600 /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		ED3D6005267C086F00352600 /* TableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSource.swift; sourceTree = "<group>"; };
 		ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalatTimes.swift; sourceTree = "<group>"; };
+		ED83A8062B81E8C700D87E27 /* Salat WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Salat WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED83A8082B81E8C700D87E27 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		ED83A80A2B81E8C800D87E27 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		ED83A8112B81E8C800D87E27 /* Salat_Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salat_Widget.swift; sourceTree = "<group>"; };
+		ED83A8132B81E8CB00D87E27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ED83A8152B81E8CB00D87E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,6 +88,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED83A8032B81E8C700D87E27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED83A80B2B81E8C800D87E27 /* SwiftUI.framework in Frameworks */,
+				ED83A8092B81E8C800D87E27 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -62,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				ED0984D6262268610001D211 /* Salat */,
+				ED83A80C2B81E8C800D87E27 /* Salat Widget */,
+				ED83A8072B81E8C700D87E27 /* Frameworks */,
 				ED0984D5262268610001D211 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				ED0984D4262268610001D211 /* Salat.app */,
+				ED83A8062B81E8C700D87E27 /* Salat WidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -100,6 +145,25 @@
 			path = Libraries;
 			sourceTree = "<group>";
 		};
+		ED83A8072B81E8C700D87E27 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED83A8082B81E8C700D87E27 /* WidgetKit.framework */,
+				ED83A80A2B81E8C800D87E27 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED83A80C2B81E8C800D87E27 /* Salat Widget */ = {
+			isa = PBXGroup;
+			children = (
+				ED83A8112B81E8C800D87E27 /* Salat_Widget.swift */,
+				ED83A8132B81E8CB00D87E27 /* Assets.xcassets */,
+				ED83A8152B81E8CB00D87E27 /* Info.plist */,
+			);
+			path = "Salat Widget";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -111,15 +175,34 @@
 				ED0984D1262268610001D211 /* Frameworks */,
 				ED0984D2262268610001D211 /* Resources */,
 				ED09851E262276040001D211 /* Embed Frameworks */,
+				ED83A81C2B81E8CB00D87E27 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				ED83A8172B81E8CB00D87E27 /* PBXTargetDependency */,
 			);
 			name = Salat;
 			productName = Salat;
 			productReference = ED0984D4262268610001D211 /* Salat.app */;
 			productType = "com.apple.product-type.application";
+		};
+		ED83A8052B81E8C700D87E27 /* Salat WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED83A8192B81E8CB00D87E27 /* Build configuration list for PBXNativeTarget "Salat WidgetExtension" */;
+			buildPhases = (
+				ED83A8022B81E8C700D87E27 /* Sources */,
+				ED83A8032B81E8C700D87E27 /* Frameworks */,
+				ED83A8042B81E8C700D87E27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Salat WidgetExtension";
+			productName = "Salat WidgetExtension";
+			productReference = ED83A8062B81E8C700D87E27 /* Salat WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -127,11 +210,14 @@
 		ED0984CC262268610001D211 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					ED0984D3262268610001D211 = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					ED83A8052B81E8C700D87E27 = {
+						CreatedOnToolsVersion = 14.2;
 					};
 				};
 			};
@@ -149,6 +235,7 @@
 			projectRoot = "";
 			targets = (
 				ED0984D3262268610001D211 /* Salat */,
+				ED83A8052B81E8C700D87E27 /* Salat WidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -161,6 +248,14 @@
 				ED0984E4262268610001D211 /* LaunchScreen.storyboard in Resources */,
 				ED3D60002674847E00352600 /* Cell.xib in Resources */,
 				ED0984E1262268610001D211 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED83A8042B81E8C700D87E27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED83A8142B81E8CB00D87E27 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +276,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ED83A8022B81E8C700D87E27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDAF8FEA2B8336DC0024976F /* SalatTimes.swift in Sources */,
+				ED83A8122B81E8C800D87E27 /* Salat_Widget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ED83A8172B81E8CB00D87E27 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ED83A8052B81E8C700D87E27 /* Salat WidgetExtension */;
+			targetProxy = ED83A8162B81E8CB00D87E27 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		ED0984E2262268610001D211 /* LaunchScreen.storyboard */ = {
@@ -314,12 +426,13 @@
 		ED0984E9262268610001D211 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.2;
 				DEVELOPMENT_TEAM = HV6243277V;
 				INFOPLIST_FILE = Salat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,6 +440,9 @@
 				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parsasaray.Salat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -335,12 +451,13 @@
 		ED0984EA262268610001D211 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3.2;
 				DEVELOPMENT_TEAM = HV6243277V;
 				INFOPLIST_FILE = Salat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -348,6 +465,67 @@
 				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parsasaray.Salat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		ED83A81A2B81E8CB00D87E27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HV6243277V;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Salat Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Salat;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.parsasaray.Salat.Salat-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		ED83A81B2B81E8CB00D87E27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HV6243277V;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Salat Widget/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Salat;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.parsasaray.Salat.Salat-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -370,6 +548,15 @@
 			buildConfigurations = (
 				ED0984E9262268610001D211 /* Debug */,
 				ED0984EA262268610001D211 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED83A8192B81E8CB00D87E27 /* Build configuration list for PBXNativeTarget "Salat WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED83A81A2B81E8CB00D87E27 /* Debug */,
+				ED83A81B2B81E8CB00D87E27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

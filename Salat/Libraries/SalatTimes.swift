@@ -121,6 +121,21 @@ public class SalatTimes {
         }
         return result
     }
+    
+    public func currentTime(times: Dictionary<String, Date>) -> String? {
+        let filteredDates = times.values.filter{$0 <= Date()}
+        let currentTime = filteredDates.max()
+        return times.first(where: {$0.value == currentTime})?.key
+    }
+    
+    public func nextTime(times: Dictionary<String, Date>) -> String? {
+        let timeNames = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night", "Dawn"]
+        let filteredDates = times.values.filter{$0 <= Date()}
+        let currentTime = filteredDates.max()
+        guard let currentTimeName = times.first(where: {$0.value == currentTime})?.key else {return "Next Prayer"}
+        guard let currentIndex = timeNames.firstIndex(of: currentTimeName) else {return "Next Prayer"}
+        return timeNames[currentIndex + 1]
+    }
 }
 
 fileprivate func acot(_ x: Double) -> Double {

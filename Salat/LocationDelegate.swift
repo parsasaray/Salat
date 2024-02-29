@@ -49,21 +49,23 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         desiredLocation = locations.last?.coordinate ?? CLLocationCoordinate2D(latitude: 0.0000, longitude: 0.0000)
         desiredTimeZone = TimeZone.current
-        setkaabaBearing()
-        setLocationName()
-        salatTableView.reloadData()
-        timelineView.setNeedsDisplay()
         
-        locationPicker.removeAnnotations(locationPicker.annotations)
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = desiredLocation
-        locationPicker.addAnnotation(annotation)
+        setkaabaBearing() {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.usesSignificantDigits = true
+            numberFormatter.maximumSignificantDigits = 4
+            if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
+                angleLabel.text = angle + "°"
+            }
+        }
         
-        let numberFormatter = NumberFormatter()
-        numberFormatter.usesSignificantDigits = true
-        numberFormatter.maximumSignificantDigits = 4
-        if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
-            angleLabel.text = angle + "°"
+        setLocationName() {
+            locationPicker.removeAnnotations(locationPicker.annotations)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = desiredLocation
+            locationPicker.addAnnotation(annotation)
+            salatTableView.reloadData()
+            timelineView.setNeedsDisplay()
         }
     }
     
@@ -87,7 +89,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     }
     
     // Calculates and Sets the bearing for the Kaaba to be displayed
-    func setkaabaBearing() {
+    func setkaabaBearing(completion: () -> Void) {
         // Point A is a point at the North Pole sharing the exact same Longitude as Point B
         // Point B is the current location of the user
         // Point C is the location of the Kaaba
@@ -99,10 +101,11 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         let distAC = pow((90 - kaabaLocation.latitude), 2) + pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
 
         kaabaBearing = acos((distAB + distBC - distAC) / (2 * sqrt(distAB) * sqrt(distBC)))
+        completion()
     }
     
     // Finds location name from coordinates using Apples API
-    func setLocationName() {
+    func setLocationName(completion: @escaping () -> Void) {
         CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: desiredLocation.latitude, longitude: desiredLocation.longitude)) { (placemarks, error) in
             var location = String()
             if let place = placemarks?[0] {
@@ -122,6 +125,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
                     }
                 }
             }
+            completion()
         }
     }
 }

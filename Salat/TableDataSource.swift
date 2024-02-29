@@ -10,15 +10,16 @@ import UIKit
 let tableDataSource = TableDataSource()
 
 class TableDataSource: NSObject, UITableViewDataSource {
+    let textStrings: [String] = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
+    
     // Generates row in TableView for each Salat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         6
     }
     
-    // Populates each generated row with the relevant Salat
+    // Populates each generated row with the relevant Salat information
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "salatCell") as! Cell
-        let textStrings: [String] = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
         let salatTimes: [String: Date] = SalatTimes().getTimes(date: desiredDate, lat: desiredLocation.latitude, lng: desiredLocation.longitude)
         
         let dateFormatter = DateFormatter()
