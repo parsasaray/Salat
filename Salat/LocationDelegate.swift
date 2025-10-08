@@ -33,9 +33,6 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         // Displays a popup explaining that location is disabled
         case .restricted, .denied:
             let dialogMessage = UIAlertController(title: "No Location Found", message: "Location is required to use this app.", preferredStyle: .alert)
-            dialogMessage.addAction(UIAlertAction(title: "Select Location", style: .default, handler: { (action) -> Void in
-                ViewController().pickLocation()
-            }))
             dialogMessage.addAction(UIAlertAction(title: "Enable Location", style: .default, handler: { (action) -> Void in
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
             }))
@@ -47,25 +44,27 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     
     // Updates the View when Device's location significantly changes
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        desiredLocation = locations.last?.coordinate ?? CLLocationCoordinate2D(latitude: 0.0000, longitude: 0.0000)
-        desiredTimeZone = TimeZone.current
-        
-        setkaabaBearing() {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.usesSignificantDigits = true
-            numberFormatter.maximumSignificantDigits = 4
-            if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
-                angleLabel.text = angle + "°"
+        if let currentLocation = locations.last?.coordinate {
+            desiredLocation =  currentLocation
+            desiredTimeZone = TimeZone.current
+            
+            setkaabaBearing() {
+                let numberFormatter = NumberFormatter()
+                numberFormatter.usesSignificantDigits = true
+                numberFormatter.maximumSignificantDigits = 4
+                if let angle = numberFormatter.string(for: kaabaBearing.degrees) {
+                    angleLabel.text = angle + "°"
+                }
             }
-        }
-        
-        setLocationName() {
-            locationPicker.removeAnnotations(locationPicker.annotations)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = desiredLocation
-            locationPicker.addAnnotation(annotation)
-            salatTableView.reloadData()
-            timelineView.setNeedsDisplay()
+            
+            setLocationName() {
+                locationPicker.removeAnnotations(locationPicker.annotations)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = desiredLocation
+                locationPicker.addAnnotation(annotation)
+                salatTableView.reloadData()
+                timelineView.setNeedsDisplay()
+            }
         }
     }
     
