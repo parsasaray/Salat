@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         timelineView.backgroundColor = .clear
         self.view.addSubview(timelineView)
         NSLayoutConstraint.activate([
-            timelineView.topAnchor.constraint(equalTo: salatTableView.bottomAnchor, constant: 10),
+            timelineView.topAnchor.constraint(equalTo: salatTableView.bottomAnchor, constant: 25),
             timelineView.centerXAnchor.constraint(equalTo: salatTableView.centerXAnchor),
             timelineView.widthAnchor.constraint(equalTo: salatTableView.widthAnchor),
             timelineView.heightAnchor.constraint(equalToConstant: 20)
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
         compassImageView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(compassImageView)
         NSLayoutConstraint.activate([
-            compassImageView.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 50),
+            compassImageView.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 40),
             compassImageView.centerXAnchor.constraint(equalTo: salatTableView.centerXAnchor),
             compassImageView.widthAnchor.constraint(equalTo: salatTableView.widthAnchor, multiplier: 0.5),
             compassImageView.heightAnchor.constraint(equalTo: salatTableView.widthAnchor, multiplier: 0.5)
@@ -80,7 +80,7 @@ class ViewController: UIViewController {
         setLocationButton.addTarget(self, action: #selector(pickLocation), for: .touchUpInside)
         self.view.addSubview(setLocationButton)
         NSLayoutConstraint.activate([
-            setLocationButton.bottomAnchor.constraint(equalTo: salatTableView.topAnchor, constant: -55),
+            setLocationButton.bottomAnchor.constraint(equalTo: salatTableView.topAnchor, constant: -35),
             setLocationButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
         

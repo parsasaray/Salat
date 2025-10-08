@@ -32,6 +32,7 @@ struct WidgetView : View {
                 Text(entry.nextSalat).font(.system(size: 14))
             }
         }
+        .containerBackground(.background, for: .widget)
     }
 }
 

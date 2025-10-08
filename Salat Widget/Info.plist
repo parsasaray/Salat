@@ -9,7 +9,5 @@
 	</dict>
 	<key>NSWidgetWantsLocation</key>
 	<true/>
-	<key>NSLocationUsageDescription</key>
-	<string>Your location needs to be used to calculate relevant prayer times.</string>
 </dict>
 </plist>
