@@ -98,8 +98,15 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         let distAB = pow((90 - desiredLocation.latitude), 2) + pow((desiredLocation.longitude - desiredLocation.longitude), 2)
         let distBC = pow((desiredLocation.latitude - kaabaLocation.latitude), 2) + pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
         let distAC = pow((90 - kaabaLocation.latitude), 2) + pow((desiredLocation.longitude - kaabaLocation.longitude), 2)
-
-        kaabaBearing = acos((distAB + distBC - distAC) / (2 * sqrt(distAB) * sqrt(distBC)))
+        
+        var angle: Double = acos((distAB + distBC - distAC) / (2 * sqrt(distAB) * sqrt(distBC)))
+        
+        // Kaaba is west -> angle should wrap clockwise from north (360° - angle)
+        if kaabaLocation.longitude < desiredLocation.longitude {
+            angle = 2 * .pi - angle
+        }
+        
+        kaabaBearing = angle
         completion()
     }
     
