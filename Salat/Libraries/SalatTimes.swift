@@ -9,8 +9,6 @@
 
 import Foundation
 
-var salatTimes = [String: Date]()
-
 public class SalatTimes {
     
     // Simple Conventions

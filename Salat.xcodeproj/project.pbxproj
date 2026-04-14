@@ -12,6 +12,9 @@
 		ED0984DC262268610001D211 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0984DB262268610001D211 /* ViewController.swift */; };
 		ED0984E1262268610001D211 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED0984E0262268610001D211 /* Assets.xcassets */; };
 		ED0984E4262268610001D211 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED0984E2262268610001D211 /* LaunchScreen.storyboard */; };
+		ED0D646F2F2BEDFF00A7FBA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */; };
+		ED0D64702F2BEDFF00A7FBA0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */; };
+		ED0D647A2F2BFC8C00A7FBA0 /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D64792F2BFC8A00A7FBA0 /* CompassView.swift */; };
 		ED387D9A28891FFF002DE53A /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED387D9928891FFF002DE53A /* TimelineView.swift */; };
 		ED3D60002674847E00352600 /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED3D5FFF2674847E00352600 /* Cell.xib */; };
 		ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3D6005267C086F00352600 /* TableDataSource.swift */; };
@@ -67,6 +70,8 @@
 		ED0984E0262268610001D211 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED0984E3262268610001D211 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED0984E5262268610001D211 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		ED0D64792F2BFC8A00A7FBA0 /* CompassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
 		ED387D9928891FFF002DE53A /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		ED3D5FFF2674847E00352600 /* Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		ED3D6005267C086F00352600 /* TableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSource.swift; sourceTree = "<group>"; };
@@ -122,11 +127,10 @@
 		ED0984D6262268610001D211 /* Salat */ = {
 			isa = PBXGroup;
 			children = (
+				ED0D64732F2BEF2F00A7FBA0 /* Delegates */,
 				ED46D40C2623DF9C00EB2E1C /* Libraries */,
-				ED0984D7262268610001D211 /* AppDelegate.swift */,
-				ED0984D9262268610001D211 /* SceneDelegate.swift */,
 				ED0984DB262268610001D211 /* ViewController.swift */,
-				EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */,
+				ED0D64782F2BFC7E00A7FBA0 /* Views */,
 				ED3D6005267C086F00352600 /* TableDataSource.swift */,
 				ED3D5FFF2674847E00352600 /* Cell.xib */,
 				ED0984E0262268610001D211 /* Assets.xcassets */,
@@ -136,11 +140,30 @@
 			path = Salat;
 			sourceTree = "<group>";
 		};
+		ED0D64732F2BEF2F00A7FBA0 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				ED0984D7262268610001D211 /* AppDelegate.swift */,
+				ED0984D9262268610001D211 /* SceneDelegate.swift */,
+				EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		ED0D64782F2BFC7E00A7FBA0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ED0D64792F2BFC8A00A7FBA0 /* CompassView.swift */,
+				ED387D9928891FFF002DE53A /* TimelineView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		ED46D40C2623DF9C00EB2E1C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */,
-				ED387D9928891FFF002DE53A /* TimelineView.swift */,
+				ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */,
 			);
 			path = Libraries;
 			sourceTree = "<group>";
@@ -270,8 +293,10 @@
 				ED0984DC262268610001D211 /* ViewController.swift in Sources */,
 				ED387D9A28891FFF002DE53A /* TimelineView.swift in Sources */,
 				ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */,
+				ED0D646F2F2BEDFF00A7FBA0 /* Extensions.swift in Sources */,
 				EDAB1ED0278DFF8F00BBADBF /* LocationDelegate.swift in Sources */,
 				ED46D40E2623DFB400EB2E1C /* SalatTimes.swift in Sources */,
+				ED0D647A2F2BFC8C00A7FBA0 /* CompassView.swift in Sources */,
 				ED0984D8262268610001D211 /* AppDelegate.swift in Sources */,
 				ED0984DA262268610001D211 /* SceneDelegate.swift in Sources */,
 			);
@@ -282,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDAF8FEA2B8336DC0024976F /* SalatTimes.swift in Sources */,
+				ED0D64702F2BEDFF00A7FBA0 /* Extensions.swift in Sources */,
 				ED83A8122B81E8C800D87E27 /* Salat_Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,7 +467,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.psaray.salat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -468,7 +494,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.psaray.salat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
