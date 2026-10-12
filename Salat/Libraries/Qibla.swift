@@ -22,4 +22,13 @@ enum Qibla {
         let wrapped = degrees < 0 ? degrees + 360 : degrees
         return wrapped >= 360 ? 0 : wrapped
     }
+
+    /// 16-point compass name for a bearing in degrees ("E", "SSE", ...)
+    static func compassPoint(for bearing: Double) -> String {
+        let points = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+                      "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
+        let normalized = bearing.truncatingRemainder(dividingBy: 360)
+        let positive = normalized < 0 ? normalized + 360 : normalized
+        return points[Int((positive + 11.25) / 22.5) % 16]
+    }
 }
