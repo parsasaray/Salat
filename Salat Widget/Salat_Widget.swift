@@ -7,114 +7,93 @@
 
 import WidgetKit
 import SwiftUI
-import CoreLocation
 
 // MARK: - The Timeline Entry
-struct WidgetEntry: TimelineEntry {
-    let date: Date
-    let currentSalat: String
-    let nextSalat: String
-    let timeGlyph: String
-}
-
-// MARK: - The Widget View
-struct WidgetView : View {
-    let entry: WidgetEntry
-    
-    var body: some View {
-        ZStack {
-            AccessoryWidgetBackground().cornerRadius(10)
-            VStack {
-                HStack {
-                    Image(systemName: entry.timeGlyph)
-                    Text(entry.currentSalat).font(.system(size: 20, weight: .heavy))
-                }
-                Text(entry.nextSalat).font(.system(size: 14))
-            }
-        }
-        .containerBackground(.background, for: .widget)
-    }
+struct PrayerEntry: TimelineEntry {
+    let snapshot: PrayerSnapshot
+    var date: Date { snapshot.date }
 }
 
 // MARK: - The Timeline Provider
-struct WidgetTimelineProvider: TimelineProvider {
-    let locationManager = LocationManager()
-    
-    func placeholder(in context: Context) -> WidgetEntry {
-        return WidgetEntry(date: Date(), currentSalat: "Current Salat", nextSalat: "Next Salat", timeGlyph: "sun.max.fill")
+// The app saves its location to the shared App Group; the widget only reads it, then
+// computes every prayer change for the next day or so. WidgetKit flips between the
+// entries on its own, so nothing here needs to run again until the timeline ends.
+struct PrayerProvider: TimelineProvider {
+    private static let sampleLocation = SharedLocation(latitude: 37.7749, longitude: -122.4194,
+                                                       name: "San Francisco, CA US", updatedAt: Date())
+
+    private func sampleEntry() -> PrayerEntry {
+        let snapshot = PrayerSchedule.timeline(for: Self.sampleLocation, now: Date()).first
+        return PrayerEntry(snapshot: snapshot ?? .needsLocation(at: Date()))
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (WidgetEntry) -> ()) {
-        let entry = WidgetEntry(date: Date(), currentSalat: "Current Salat", nextSalat: "Next Salat", timeGlyph: "sun.max.fill")
-        completion(entry)
+    func placeholder(in context: Context) -> PrayerEntry {
+        sampleEntry()
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<WidgetEntry>) -> ()) {
-        locationManager.requestLocation { coordinate in
-            let timeGlyphs = ["Dawn": "moon.stars", "Sunrise": "sunrise.fill", "Noon": "sun.max.fill", "Afternoon": "sun.min.fill", "Sunset": "sunset.fill", "Night": "moon.fill"]
-            
-            guard let coordinate = coordinate,
-                  let status = SalatTimes().status(lat: coordinate.latitude, lng: coordinate.longitude) else {
-                // No location (or no usable times): show a hint and try again soon
-                let entry = WidgetEntry(date: Date(), currentSalat: "Salat", nextSalat: "Location needed", timeGlyph: "location.slash")
-                completion(Timeline(entries: [entry], policy: .after(Date().addingTimeInterval(15 * 60))))
-                return
-            }
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "h:mm"
-            let nextTimeString = dateFormatter.string(from: status.nextDate)
-            
-            let entry = WidgetEntry(date: Date(), currentSalat: status.current, nextSalat: "\(status.next) - \(nextTimeString)", timeGlyph: timeGlyphs[status.current] ?? "sun.max.fill")
-            completion(Timeline(entries: [entry], policy: .after(status.nextDate)))
+    func getSnapshot(in context: Context, completion: @escaping (PrayerEntry) -> ()) {
+        guard let location = SharedLocationStore.load() else {
+            completion(context.isPreview ? sampleEntry() : PrayerEntry(snapshot: .needsLocation(at: Date(), appGroupMissing: !SharedLocationStore.isGroupAvailable)))
+            return
         }
+        let snapshot = PrayerSchedule.timeline(for: location, now: Date()).first
+        completion(PrayerEntry(snapshot: snapshot ?? .needsLocation(at: Date())))
+    }
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<PrayerEntry>) -> ()) {
+        let now = Date()
+        guard let location = SharedLocationStore.load() else {
+            // The app reloads widgets as soon as it has a location; this is just a safety net
+            let entry = PrayerEntry(snapshot: .needsLocation(at: now, appGroupMissing: !SharedLocationStore.isGroupAvailable))
+            completion(Timeline(entries: [entry], policy: .after(now.addingTimeInterval(15 * 60))))
+            return
+        }
+        let entries = PrayerSchedule.timeline(for: location, now: now).map { PrayerEntry(snapshot: $0) }
+        completion(Timeline(entries: entries, policy: .atEnd))
     }
 }
 
-// MARK: - The Widget Configuration
-@main struct SalatWidget: Widget {
+// MARK: - The Widget Configurations
+struct PrayerWidget: Widget {
+    // Unchanged so widgets people already placed keep working
+    let kind = "com.parsasaray.Salat.Salat-Widget"
+
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "com.parsasaray.Salat.Salat-Widget", provider: WidgetTimelineProvider()) { entry in
-            WidgetView(entry: entry)
+        StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
+            PrayerWidgetView(entry: entry)
         }
-        .configurationDisplayName("Salat Widget")
-        .description("Show Salat times in a widget.")
+        .configurationDisplayName("Prayer Times")
+        .description("The current prayer, what is next, and the day's times.")
         .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
             .accessoryRectangular,
-            .systemSmall
+            .accessoryCircular,
+            .accessoryInline
         ])
     }
 }
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
-    let locationManager = CLLocationManager()
-    private var pending: [(CLLocationCoordinate2D?) -> Void] = []
-    
-    override init() {
-        super.init()
-        locationManager.delegate = self
-    }
-    
-    // Asks for a single location fix. `completion` is called exactly once, with nil on failure.
-    func requestLocation(completion: @escaping (CLLocationCoordinate2D?) -> Void) {
-        pending.append(completion)
-        if pending.count == 1 {
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.requestLocation()
+struct QiblaWidget: Widget {
+    let kind = "com.parsasaray.Salat.Qibla"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PrayerProvider()) { entry in
+            QiblaWidgetView(entry: entry)
         }
+        .configurationDisplayName("Qibla")
+        .description("The direction of the Qibla from where you are.")
+        .supportedFamilies([
+            .accessoryCircular,
+            .accessoryInline
+        ])
     }
-    
-    private func finish(with coordinate: CLLocationCoordinate2D?) {
-        let handlers = pending
-        pending = []
-        handlers.forEach { $0(coordinate) }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        finish(with: locations.last?.coordinate)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        finish(with: nil)
+}
+
+@main struct SalatWidgets: WidgetBundle {
+    var body: some Widget {
+        PrayerWidget()
+        QiblaWidget()
     }
 }

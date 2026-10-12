@@ -128,21 +128,6 @@ public class SalatTimes {
         }
         return result.filter { !$0.value.timeIntervalSince1970.isNaN }
     }
-    
-    // The prayer that is currently in effect, the next one, and when the next one starts.
-    // Before today's Dawn the current prayer is still last night's "Night".
-    public func status(at now: Date = Date(), lat: Double, lng: Double, calendar: Calendar = .current) -> (current: String, next: String, nextDate: Date)? {
-        guard let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: now) else { return nil }
-        let today = getTimes(date: now, lat: lat, lng: lng, calendar: calendar)
-        let tomorrow = getTimes(date: tomorrowDate, lat: lat, lng: lng, calendar: calendar)
-        
-        let upcoming = SalatTimes.names.compactMap { name in today[name].map { (name, $0) } }
-            + SalatTimes.names.compactMap { name in tomorrow[name].map { (name, $0) } }
-        guard let next = upcoming.first(where: { $0.1 > now }) else { return nil }
-        
-        let current = upcoming.last(where: { $0.1 <= now })?.0 ?? "Night"
-        return (current, next.0, next.1)
-    }
 }
 
 fileprivate func acot(_ x: Double) -> Double {

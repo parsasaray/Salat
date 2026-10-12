@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED7F00102F90000100A00001 /* WidgetLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F000F2F90000100A00001 /* WidgetLogicTests.swift */; };
+		ED7F000E2F90000100A00001 /* QiblaWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F000D2F90000100A00001 /* QiblaWidgetView.swift */; };
+		ED7F000C2F90000100A00001 /* PrayerWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F000B2F90000100A00001 /* PrayerWidgetViews.swift */; };
+		ED7F000A2F90000100A00001 /* WidgetTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00092F90000100A00001 /* WidgetTheme.swift */; };
+		ED7F00082F90000100A00001 /* Qibla.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00012F90000100A00001 /* Qibla.swift */; };
+		ED7F00072F90000100A00001 /* PrayerSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00052F90000100A00001 /* PrayerSchedule.swift */; };
+		ED7F00062F90000100A00001 /* PrayerSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00052F90000100A00001 /* PrayerSchedule.swift */; };
+		ED7F00042F90000100A00001 /* SharedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00012F90000100A00001 /* SharedLocation.swift */; };
+		ED7F00032F90000100A00001 /* SharedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00012F90000100A00001 /* SharedLocation.swift */; };
+		ED7F00022F90000100A00001 /* SharedLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00012F90000100A00001 /* SharedLocation.swift */; };
 		ED7E00022F90000100A00001 /* Qibla.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00012F90000100A00001 /* Qibla.swift */; };
 		ED7E00032F90000100A00001 /* Qibla.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00012F90000100A00001 /* Qibla.swift */; };
 		ED7E00042F90000100A00001 /* SalatTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */; };
@@ -69,6 +79,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ED7F000F2F90000100A00001 /* WidgetLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WidgetLogicTests.swift"; sourceTree = "<group>"; };
+		ED7F000D2F90000100A00001 /* QiblaWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QiblaWidgetView.swift"; sourceTree = "<group>"; };
+		ED7F000B2F90000100A00001 /* PrayerWidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrayerWidgetViews.swift"; sourceTree = "<group>"; };
+		ED7F00092F90000100A00001 /* WidgetTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WidgetTheme.swift"; sourceTree = "<group>"; };
+		ED7F00052F90000100A00001 /* PrayerSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrayerSchedule.swift"; sourceTree = "<group>"; };
+		ED7F00012F90000100A00001 /* SharedLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedLocation.swift"; sourceTree = "<group>"; };
 		ED7E00012F90000100A00001 /* Qibla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qibla.swift; sourceTree = "<group>"; };
 		ED7E00062F90000100A00001 /* QiblaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaTests.swift; sourceTree = "<group>"; };
 		ED7E00082F90000100A00001 /* SalatTimesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalatTimesTests.swift; sourceTree = "<group>"; };
@@ -125,6 +141,7 @@
 		ED7E000B2F90000100A00001 /* SalatTests */ = {
 			isa = PBXGroup;
 			children = (
+				ED7F000F2F90000100A00001 /* WidgetLogicTests.swift */,
 				ED7E00062F90000100A00001 /* QiblaTests.swift */,
 				ED7E00082F90000100A00001 /* SalatTimesTests.swift */,
 			);
@@ -190,6 +207,8 @@
 		ED46D40C2623DF9C00EB2E1C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				ED7F00052F90000100A00001 /* PrayerSchedule.swift */,
+				ED7F00012F90000100A00001 /* SharedLocation.swift */,
 				ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */,
 				ED7E00012F90000100A00001 /* Qibla.swift */,
 				ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */,
@@ -209,6 +228,9 @@
 		ED83A80C2B81E8C800D87E27 /* Salat Widget */ = {
 			isa = PBXGroup;
 			children = (
+				ED7F000D2F90000100A00001 /* QiblaWidgetView.swift */,
+				ED7F000B2F90000100A00001 /* PrayerWidgetViews.swift */,
+				ED7F00092F90000100A00001 /* WidgetTheme.swift */,
 				ED83A8112B81E8C800D87E27 /* Salat_Widget.swift */,
 				ED83A8132B81E8CB00D87E27 /* Assets.xcassets */,
 				ED83A8152B81E8CB00D87E27 /* Info.plist */,
@@ -347,6 +369,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED7F00102F90000100A00001 /* WidgetLogicTests.swift in Sources */,
+				ED7F00072F90000100A00001 /* PrayerSchedule.swift in Sources */,
+				ED7F00042F90000100A00001 /* SharedLocation.swift in Sources */,
 				ED7E00042F90000100A00001 /* SalatTimes.swift in Sources */,
 				ED7E00052F90000100A00001 /* Extensions.swift in Sources */,
 				ED7E00032F90000100A00001 /* Qibla.swift in Sources */,
@@ -359,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED7F00022F90000100A00001 /* SharedLocation.swift in Sources */,
 				ED0984DC262268610001D211 /* ViewController.swift in Sources */,
 				ED387D9A28891FFF002DE53A /* TimelineView.swift in Sources */,
 				ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */,
@@ -376,6 +402,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED7F000E2F90000100A00001 /* QiblaWidgetView.swift in Sources */,
+				ED7F000C2F90000100A00001 /* PrayerWidgetViews.swift in Sources */,
+				ED7F000A2F90000100A00001 /* WidgetTheme.swift in Sources */,
+				ED7F00082F90000100A00001 /* Qibla.swift in Sources */,
+				ED7F00062F90000100A00001 /* PrayerSchedule.swift in Sources */,
+				ED7F00032F90000100A00001 /* SharedLocation.swift in Sources */,
 				EDAF8FEA2B8336DC0024976F /* SalatTimes.swift in Sources */,
 				ED0D64702F2BEDFF00A7FBA0 /* Extensions.swift in Sources */,
 				ED83A8122B81E8C800D87E27 /* Salat_Widget.swift in Sources */,
@@ -586,6 +618,7 @@
 				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.psaray.salat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -613,6 +646,7 @@
 				MARKETING_VERSION = 3.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.psaray.salat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -635,7 +669,6 @@
 				INFOPLIST_FILE = "Salat Widget/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Salat;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationUsageDescription = "Your location needs to be used to calculate relevant prayer times.";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -645,6 +678,7 @@
 				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.psaray.salat.Salat-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -669,7 +703,6 @@
 				INFOPLIST_FILE = "Salat Widget/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Salat;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSLocationUsageDescription = "Your location needs to be used to calculate relevant prayer times.";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -679,6 +712,7 @@
 				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.psaray.salat.Salat-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
