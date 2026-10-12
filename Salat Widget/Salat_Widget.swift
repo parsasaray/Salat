@@ -50,17 +50,23 @@ struct WidgetTimelineProvider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<WidgetEntry>) -> ()) {
-        locationManager.onUpdateLocation = { currentSalat, nextSalat, nextSalatTime in
+        locationManager.requestLocation { coordinate in
+            let timeGlyphs = ["Dawn": "moon.stars", "Sunrise": "sunrise.fill", "Noon": "sun.max.fill", "Afternoon": "sun.min.fill", "Sunset": "sunset.fill", "Night": "moon.fill"]
+            
+            guard let coordinate = coordinate,
+                  let status = SalatTimes().status(lat: coordinate.latitude, lng: coordinate.longitude) else {
+                // No location (or no usable times): show a hint and try again soon
+                let entry = WidgetEntry(date: Date(), currentSalat: "Salat", nextSalat: "Location needed", timeGlyph: "location.slash")
+                completion(Timeline(entries: [entry], policy: .after(Date().addingTimeInterval(15 * 60))))
+                return
+            }
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "h:mm"
-            let nextTimeString = dateFormatter.string(from: nextSalatTime)
+            let nextTimeString = dateFormatter.string(from: status.nextDate)
             
-            let timeGlyphs = ["Dawn": "moon.stars", "Sunrise": "sunrise.fill", "Noon": "sun.max.fill", "Afternoon": "sun.min.fill", "Sunset": "sunset.fill", "Night": "moon.fill"]
-            let timeGlyph = timeGlyphs[currentSalat]!
-            
-            let entry = WidgetEntry(date: Date(), currentSalat: currentSalat, nextSalat: "\(nextSalat) - \(nextTimeString)", timeGlyph: timeGlyph)
-            let timeline = Timeline(entries: [entry], policy: .after(nextSalatTime))
-            completion(timeline)
+            let entry = WidgetEntry(date: Date(), currentSalat: status.current, nextSalat: "\(status.next) - \(nextTimeString)", timeGlyph: timeGlyphs[status.current] ?? "sun.max.fill")
+            completion(Timeline(entries: [entry], policy: .after(status.nextDate)))
         }
     }
 }
@@ -82,21 +88,33 @@ struct WidgetTimelineProvider: TimelineProvider {
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
+    private var pending: [(CLLocationCoordinate2D?) -> Void] = []
+    
     override init() {
         super.init()
         locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
     }
     
-    var onUpdateLocation:((String, String, Date) -> Void)?
+    // Asks for a single location fix. `completion` is called exactly once, with nil on failure.
+    func requestLocation(completion: @escaping (CLLocationCoordinate2D?) -> Void) {
+        pending.append(completion)
+        if pending.count == 1 {
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestLocation()
+        }
+    }
+    
+    private func finish(with coordinate: CLLocationCoordinate2D?) {
+        let handlers = pending
+        pending = []
+        handlers.forEach { $0(coordinate) }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let desiredLocation = locations.last?.coordinate else {return}
-        let salatTimes = SalatTimes().getTimes(date: Date(), lat: desiredLocation.latitude, lng: desiredLocation.longitude)
-        guard let currentSalat = SalatTimes().currentTime(times: salatTimes) else {return}
-        guard let nextSalat = SalatTimes().nextTime(times: salatTimes) else {return}
-        guard let nextSalatTimes = salatTimes[nextSalat] else {return}
-        onUpdateLocation?(currentSalat, nextSalat, nextSalatTimes)
+        finish(with: locations.last?.coordinate)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        finish(with: nil)
     }
 }

@@ -24,7 +24,7 @@ class TimelineView: UIView {
             let salatTimes: [String: Date] = SalatTimes().getTimes(date: desiredDate, lat: coord.latitude, lng: coord.longitude)
             
             for timeName in ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"] {
-                guard let date = salatTimes[timeName] else { return }
+                guard let date = salatTimes[timeName] else { continue }
                 let interval = date.timeIntervalSince(desiredDate.startOfDay)
                 let intervalRatio = (interval/86400) * self.bounds.width
                 

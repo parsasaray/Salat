@@ -84,8 +84,17 @@ public class SalatTimes {
     }
     
     
-    // Returns all Salat times in a dictionary for later use.
-    public func getTimes(date: Date, lat: Double, lng: Double) -> Dictionary<String, Date> {
+    // Prayer names in the order they occur during a day.
+    public static let names = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night"]
+    
+    // Returns all Salat times for the calendar day containing `date`, keyed by name.
+    // The sun never reaches some angles at high latitudes (e.g. -18° in a Moscow summer);
+    // those times are left out of the dictionary instead of being returned as invalid dates.
+    public func getTimes(date: Date, lat: Double, lng: Double, calendar: Calendar = .current) -> Dictionary<String, Date> {
+        // Solve from local noon so the result is always the solar day that belongs to
+        // this calendar date, even shortly after midnight.
+        let date = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: date) ?? date
+        
         let lw: Double = rad * -lng
         let phi: Double = rad * lat
         
@@ -117,22 +126,22 @@ public class SalatTimes {
             result[time[1] as! String] = fromJulian(j: Jrise)
             result[time[2] as! String] = fromJulian(j: Jset)
         }
-        return result
+        return result.filter { !$0.value.timeIntervalSince1970.isNaN }
     }
     
-    public func currentTime(times: Dictionary<String, Date>) -> String? {
-        let filteredDates = times.values.filter{$0 <= Date()}
-        let currentTime = filteredDates.max()
-        return times.first(where: {$0.value == currentTime})?.key
-    }
-    
-    public func nextTime(times: Dictionary<String, Date>) -> String? {
-        let timeNames = ["Dawn", "Sunrise", "Noon", "Afternoon", "Sunset", "Night", "Dawn"]
-        let filteredDates = times.values.filter{$0 <= Date()}
-        let currentTime = filteredDates.max()
-        guard let currentTimeName = times.first(where: {$0.value == currentTime})?.key else {return "Next Prayer"}
-        guard let currentIndex = timeNames.firstIndex(of: currentTimeName) else {return "Next Prayer"}
-        return timeNames[currentIndex + 1]
+    // The prayer that is currently in effect, the next one, and when the next one starts.
+    // Before today's Dawn the current prayer is still last night's "Night".
+    public func status(at now: Date = Date(), lat: Double, lng: Double, calendar: Calendar = .current) -> (current: String, next: String, nextDate: Date)? {
+        guard let tomorrowDate = calendar.date(byAdding: .day, value: 1, to: now) else { return nil }
+        let today = getTimes(date: now, lat: lat, lng: lng, calendar: calendar)
+        let tomorrow = getTimes(date: tomorrowDate, lat: lat, lng: lng, calendar: calendar)
+        
+        let upcoming = SalatTimes.names.compactMap { name in today[name].map { (name, $0) } }
+            + SalatTimes.names.compactMap { name in tomorrow[name].map { (name, $0) } }
+        guard let next = upcoming.first(where: { $0.1 > now }) else { return nil }
+        
+        let current = upcoming.last(where: { $0.1 <= now })?.0 ?? "Night"
+        return (current, next.0, next.1)
     }
 }
 

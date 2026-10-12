@@ -34,7 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        
+        // The app may have been suspended for days, so show today again
+        (mainWindow?.rootViewController as? ViewController)?.refreshToNow()
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

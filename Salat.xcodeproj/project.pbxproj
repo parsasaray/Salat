@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED7E00022F90000100A00001 /* Qibla.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00012F90000100A00001 /* Qibla.swift */; };
+		ED7E00032F90000100A00001 /* Qibla.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00012F90000100A00001 /* Qibla.swift */; };
+		ED7E00042F90000100A00001 /* SalatTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */; };
+		ED7E00052F90000100A00001 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */; };
+		ED7E00072F90000100A00001 /* QiblaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00062F90000100A00001 /* QiblaTests.swift */; };
+		ED7E00092F90000100A00001 /* SalatTimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7E00082F90000100A00001 /* SalatTimesTests.swift */; };
 		ED0984D8262268610001D211 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0984D7262268610001D211 /* AppDelegate.swift */; };
 		ED0984DA262268610001D211 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0984D9262268610001D211 /* SceneDelegate.swift */; };
 		ED0984DC262268610001D211 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0984DB262268610001D211 /* ViewController.swift */; };
@@ -63,6 +69,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		ED7E00012F90000100A00001 /* Qibla.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Qibla.swift; sourceTree = "<group>"; };
+		ED7E00062F90000100A00001 /* QiblaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiblaTests.swift; sourceTree = "<group>"; };
+		ED7E00082F90000100A00001 /* SalatTimesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalatTimesTests.swift; sourceTree = "<group>"; };
+		ED7E000A2F90000100A00001 /* SalatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SalatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0984D4262268610001D211 /* Salat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Salat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0984D7262268610001D211 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED0984D9262268610001D211 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +96,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		ED7E000E2F90000100A00001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ED0984D1262268610001D211 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -105,11 +122,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED7E000B2F90000100A00001 /* SalatTests */ = {
+			isa = PBXGroup;
+			children = (
+				ED7E00062F90000100A00001 /* QiblaTests.swift */,
+				ED7E00082F90000100A00001 /* SalatTimesTests.swift */,
+			);
+			path = SalatTests;
+			sourceTree = "<group>";
+		};
 		ED0984CB262268610001D211 = {
 			isa = PBXGroup;
 			children = (
 				ED0984D6262268610001D211 /* Salat */,
 				ED83A80C2B81E8C800D87E27 /* Salat Widget */,
+				ED7E000B2F90000100A00001 /* SalatTests */,
 				ED83A8072B81E8C700D87E27 /* Frameworks */,
 				ED0984D5262268610001D211 /* Products */,
 			);
@@ -120,6 +147,7 @@
 			children = (
 				ED0984D4262268610001D211 /* Salat.app */,
 				ED83A8062B81E8C700D87E27 /* Salat WidgetExtension.appex */,
+				ED7E000A2F90000100A00001 /* SalatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */,
+				ED7E00012F90000100A00001 /* Qibla.swift */,
 				ED0D646E2F2BEDFC00A7FBA0 /* Extensions.swift */,
 			);
 			path = Libraries;
@@ -190,6 +219,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		ED7E000C2F90000100A00001 /* SalatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED7E00102F90000100A00001 /* Build configuration list for PBXNativeTarget "SalatTests" */;
+			buildPhases = (
+				ED7E000D2F90000100A00001 /* Sources */,
+				ED7E000E2F90000100A00001 /* Frameworks */,
+				ED7E000F2F90000100A00001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SalatTests;
+			productName = SalatTests;
+			productReference = ED7E000A2F90000100A00001 /* SalatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		ED0984D3262268610001D211 /* Salat */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ED0984E8262268610001D211 /* Build configuration list for PBXNativeTarget "Salat" */;
@@ -243,6 +289,9 @@
 					ED83A8052B81E8C700D87E27 = {
 						CreatedOnToolsVersion = 14.2;
 					};
+					ED7E000C2F90000100A00001 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 				};
 			};
 			buildConfigurationList = ED0984CF262268610001D211 /* Build configuration list for PBXProject "Salat" */;
@@ -260,11 +309,19 @@
 			targets = (
 				ED0984D3262268610001D211 /* Salat */,
 				ED83A8052B81E8C700D87E27 /* Salat WidgetExtension */,
+				ED7E000C2F90000100A00001 /* SalatTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		ED7E000F2F90000100A00001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ED0984D2262268610001D211 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,6 +343,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		ED7E000D2F90000100A00001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED7E00042F90000100A00001 /* SalatTimes.swift in Sources */,
+				ED7E00052F90000100A00001 /* Extensions.swift in Sources */,
+				ED7E00032F90000100A00001 /* Qibla.swift in Sources */,
+				ED7E00072F90000100A00001 /* QiblaTests.swift in Sources */,
+				ED7E00092F90000100A00001 /* SalatTimesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ED0984D0262268610001D211 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,6 +365,7 @@
 				ED0D646F2F2BEDFF00A7FBA0 /* Extensions.swift in Sources */,
 				EDAB1ED0278DFF8F00BBADBF /* LocationDelegate.swift in Sources */,
 				ED46D40E2623DFB400EB2E1C /* SalatTimes.swift in Sources */,
+				ED7E00022F90000100A00001 /* Qibla.swift in Sources */,
 				ED0D647A2F2BFC8C00A7FBA0 /* CompassView.swift in Sources */,
 				ED0984D8262268610001D211 /* AppDelegate.swift in Sources */,
 				ED0984DA262268610001D211 /* SceneDelegate.swift in Sources */,
@@ -334,6 +404,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		ED7E00112F90000100A00001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A4RKKLHK7N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.psaray.salat.SalatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		ED7E00122F90000100A00001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A4RKKLHK7N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.psaray.salat.SalatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		ED0984E6262268610001D211 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -577,6 +693,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		ED7E00102F90000100A00001 /* Build configuration list for PBXNativeTarget "SalatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED7E00112F90000100A00001 /* Debug */,
+				ED7E00122F90000100A00001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ED0984CF262268610001D211 /* Build configuration list for PBXProject "Salat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -19,16 +19,16 @@ class TableDataSource: NSObject, UITableViewDataSource {
     // Populates each generated row with the relevant Salat information
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "salatCell") as! Cell
-        if let location = LocationDelegate.shared.currentLocation {
-            let coord = location.coordinate
-            let salatTimes: [String: Date] = SalatTimes().getTimes(date: desiredDate, lat: coord.latitude, lng: coord.longitude)
-            
+        let name = textStrings[indexPath.row]
+        if let location = LocationDelegate.shared.currentLocation,
+           let time = SalatTimes().getTimes(date: desiredDate, lat: location.coordinate.latitude, lng: location.coordinate.longitude)[name] {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "h:mm"
             dateFormatter.timeZone = LocationDelegate.shared.currentTimeZone
             
-            cell.timeLabel.text = dateFormatter.string(from: salatTimes[textStrings[indexPath.row]]!)
+            cell.timeLabel.text = dateFormatter.string(from: time)
         } else {
+            // No location yet, or the sun never reaches this angle on this day
             cell.timeLabel.text = "--:--"
         }
         cell.nameLabel.text = textStrings[indexPath.row]

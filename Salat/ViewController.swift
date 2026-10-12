@@ -156,6 +156,12 @@ class ViewController: UIViewController {
         timelineView.setNeedsDisplay()
     }
     
+    // Points the View back at the current moment, used when the app returns to the foreground
+    func refreshToNow() {
+        dateSelector.date = Date()
+        datePicked(dateSelector)
+    }
+    
     // Shows Location Picker on View
     @objc func pickLocation() {
         UIImpactFeedbackGenerator().impactOccurred()
