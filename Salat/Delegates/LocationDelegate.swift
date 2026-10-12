@@ -49,6 +49,21 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // Asks for a fresh location, used when the app returns to the foreground because
+    // significant location changes are not delivered reliably while the app is closed
+    func refreshLocation() {
+        switch locationManager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            locationManager.requestLocation()
+        default:
+            break
+        }
+    }
+    
+    // A one-time location request can fail (e.g. no signal); the previous location stays on screen
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    }
+    
     // Updates the View when Device's location significantly changes
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
@@ -64,7 +79,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         guard heading.trueHeading >= 0 else { return }
         
         let kaabaDirection = kaabaBearing - heading.trueHeading.radians
-        if kaabaDirection.degrees.rounded() == 0 {
+        if kaabaDirection.wrappedToHalfTurn.degrees.rounded() == 0 {
             UIImpactFeedbackGenerator().impactOccurred()
         } else {
             UISelectionFeedbackGenerator().selectionChanged()

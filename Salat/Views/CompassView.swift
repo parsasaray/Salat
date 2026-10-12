@@ -45,11 +45,7 @@ class CompassView: UIView {
         loc.onCompassRotation = { [weak self] direction in
             UIView.animate(withDuration: 0.1, animations: { [self] in
                 self?.compassImageView.transform = CGAffineTransform(rotationAngle: direction)
-                if direction > 0 || direction < -.pi {
-                    self?.angleLabel.transform = CGAffineTransform(rotationAngle: direction - .pi/2)
-                } else {
-                    self?.angleLabel.transform = CGAffineTransform(rotationAngle: direction + .pi/2)
-                }
+                self?.angleLabel.transform = CGAffineTransform(rotationAngle: direction.readableLabelRotation)
             })
         }
     }

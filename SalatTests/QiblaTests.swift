@@ -91,3 +91,51 @@ final class QiblaTests: XCTestCase {
         XCTAssertGreaterThan(compared, 1000)
     }
 }
+
+final class CompassAngleTests: XCTestCase {
+
+    private func degrees(_ d: Double) -> Double { d.radians }
+
+    func testWrapStaysInHalfTurn() {
+        for deg in stride(from: -720.0, through: 720.0, by: 10.0) {
+            let w = degrees(deg).wrappedToHalfTurn
+            XCTAssertTrue(w > -.pi - 1e-12 && w <= .pi + 1e-12, "\(deg)° wrapped to \(w)")
+            // Same direction as before
+            XCTAssertEqual(cos(w), cos(degrees(deg)), accuracy: 1e-9)
+            XCTAssertEqual(sin(w), sin(degrees(deg)), accuracy: 1e-9)
+        }
+    }
+
+    func testWrapExamples() {
+        XCTAssertEqual(degrees(350).wrappedToHalfTurn.degrees, -10, accuracy: 1e-9)
+        XCTAssertEqual(degrees(-350).wrappedToHalfTurn.degrees, 10, accuracy: 1e-9)
+        XCTAssertEqual(degrees(180).wrappedToHalfTurn.degrees, 180, accuracy: 1e-9)
+        XCTAssertEqual(degrees(-180).wrappedToHalfTurn.degrees, 180, accuracy: 1e-9)
+    }
+
+    func testLabelIsNeverUpsideDown() {
+        // The compass passes direction = qibla bearing - heading, which spans (-360°, 360°)
+        for deg in stride(from: -359.0, through: 359.0, by: 1.0) {
+            XCTAssertGreaterThanOrEqual(cos(degrees(deg).readableLabelRotation), -1e-9, "upside down at \(deg)°")
+        }
+    }
+
+    func testLabelStillRunsAlongTheArrow() {
+        // Rotation is always a quarter turn off the arrow, so the text lies along the shaft
+        for deg in stride(from: -359.0, through: 359.0, by: 7.0) {
+            let arrow = degrees(deg)
+            let offset = (arrow.readableLabelRotation - arrow).wrappedToHalfTurn
+            XCTAssertEqual(abs(offset), .pi / 2, accuracy: 1e-9, "at \(deg)°")
+        }
+    }
+
+    func testLabelUnchangedWhereOldCodeWasAlreadyCorrect() {
+        func old(_ d: Double) -> Double { (d > 0 || d < -.pi) ? d - .pi / 2 : d + .pi / 2 }
+        for deg in stride(from: -359.0, through: 180.0, by: 1.0) {
+            // Exactly -180° and +180° are the same direction; the old code gave them opposite labels
+            if deg == -180 { continue }
+            let d = degrees(deg)
+            XCTAssertEqual(d.readableLabelRotation.wrappedToHalfTurn, old(d).wrappedToHalfTurn, accuracy: 1e-9, "at \(deg)°")
+        }
+    }
+}

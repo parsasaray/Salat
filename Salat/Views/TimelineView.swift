@@ -34,8 +34,10 @@ class TimelineView: UIView {
             }
         }
         
-        if desiredDate.startOfDay == Date().startOfDay {
-            let interval = desiredDate.timeIntervalSince(desiredDate.startOfDay)
+        // Marks the real current time, but only while looking at today
+        let now = Date()
+        if desiredDate.startOfDay == now.startOfDay {
+            let interval = now.timeIntervalSince(now.startOfDay)
             let intervalRatio = (interval/86400) * self.bounds.width
             
             let currentTimeMarker = UIImage(systemName: "sun.max.fill")?.withTintColor(.label)

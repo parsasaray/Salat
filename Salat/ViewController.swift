@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     private let tableDataSource = TableDataSource()
     private var dateSelectorTopAnchor: NSLayoutConstraint!
     private var locViewTopAnchor: NSLayoutConstraint!
+    // True until a date other than today is picked. While true, the app keeps showing today.
+    private var followsToday = true
     
     // Adds all visual elements to the View
     override func viewDidLoad() {
@@ -131,6 +133,16 @@ class ViewController: UIViewController {
             self?.tableView.reloadData()
             self?.timelineView.setNeedsDisplay()
         }
+        
+        // Keeps the current-time marker moving, and rolls over to the next day at midnight
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if self.followsToday && !Calendar.current.isDateInToday(self.tableDataSource.desiredDate) {
+                self.refreshToNow()
+            } else {
+                self.timelineView.setNeedsDisplay()
+            }
+        }
     }
     
     // Shows Date Picker on View
@@ -147,19 +159,26 @@ class ViewController: UIViewController {
     
     // Assigns picked Date to be used later and updates View accordingly
     @objc func datePicked(_ sender: UIDatePicker) {
-        dateButton.setTitle(sender.date.formatted(date: .long, time: .omitted), for: .normal)
+        followsToday = Calendar.current.isDateInToday(sender.date)
+        show(date: sender.date)
+    }
+    
+    // Points the View back at the current moment unless a specific date was picked.
+    // Used when the app returns to the foreground and when the day changes while open.
+    func refreshToNow() {
+        guard followsToday else { return }
+        dateSelector.date = Date()
+        show(date: dateSelector.date)
+    }
+    
+    private func show(date: Date) {
+        dateButton.setTitle(date.formatted(date: .long, time: .omitted), for: .normal)
         
-        tableDataSource.desiredDate = sender.date
-        timelineView.desiredDate = sender.date
+        tableDataSource.desiredDate = date
+        timelineView.desiredDate = date
         
         tableView.reloadData()
         timelineView.setNeedsDisplay()
-    }
-    
-    // Points the View back at the current moment, used when the app returns to the foreground
-    func refreshToNow() {
-        dateSelector.date = Date()
-        datePicked(dateSelector)
     }
     
     // Shows Location Picker on View
