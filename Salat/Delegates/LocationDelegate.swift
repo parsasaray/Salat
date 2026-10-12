@@ -33,10 +33,13 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
             manager.requestWhenInUseAuthorization()
         // Starts using location data
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            // Prayer times and Qibla only need a rough position, so keep this cheap
+            locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+            locationManager.distanceFilter = 1000
             locationManager.headingOrientation = .portrait
             locationManager.startMonitoringSignificantLocationChanges()
             locationManager.startUpdatingHeading()
+            startForegroundUpdates()
         // Displays a popup explaining that location is disabled
         case .restricted, .denied:
             let dialogMessage = UIAlertController(title: "No Location Found", message: "Location is required to use this app.", preferredStyle: .alert)
@@ -49,40 +52,57 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    // Asks for a fresh location, used when the app returns to the foreground because
-    // significant location changes are not delivered reliably while the app is closed
-    func refreshLocation() {
+    // True heading (needed to point at the Qibla) is only valid while location updates are
+    // running, and significant location changes alone are not delivered reliably. So location
+    // updates run whenever the app is on screen, which also gives a fresh location on return.
+    func startForegroundUpdates() {
         switch locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
-            locationManager.requestLocation()
+            locationManager.startUpdatingLocation()
         default:
             break
         }
     }
     
-    // A one-time location request can fail (e.g. no signal); the previous location stays on screen
+    func stopForegroundUpdates() {
+        locationManager.stopUpdatingLocation()
+    }
+    
+    // Location can be briefly unavailable (e.g. no signal); the previous location stays on screen
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
     }
     
-    // Updates the View when Device's location significantly changes
+    // Updates the View when Device's location changes
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
         currentTimeZone = TimeZone.current
         
         findkaabaBearing()
         findLocationName()
+        
+        // The heading only reports changes, so a phone held still would keep showing the
+        // arrow from before this location (or before true heading was available).
+        if let heading = manager.heading {
+            updateCompass(with: heading, givingFeedback: false)
+        }
     }
     
     // Updates the View when Device is rotated
     func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
+        updateCompass(with: heading, givingFeedback: true)
+    }
+    
+    private func updateCompass(with heading: CLHeading, givingFeedback: Bool) {
         // A negative heading means the compass has no valid reading yet
         guard heading.trueHeading >= 0 else { return }
         
         let kaabaDirection = kaabaBearing - heading.trueHeading.radians
-        if kaabaDirection.wrappedToHalfTurn.degrees.rounded() == 0 {
-            UIImpactFeedbackGenerator().impactOccurred()
-        } else {
-            UISelectionFeedbackGenerator().selectionChanged()
+        if givingFeedback {
+            if kaabaDirection.wrappedToHalfTurn.degrees.rounded() == 0 {
+                UIImpactFeedbackGenerator().impactOccurred()
+            } else {
+                UISelectionFeedbackGenerator().selectionChanged()
+            }
         }
         
         self.onCompassRotation?(kaabaDirection)
