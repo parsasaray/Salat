@@ -7,6 +7,7 @@
 
 import CoreLocation
 import MapKit
+import WidgetKit
 
 class LocationDelegate: NSObject, CLLocationManagerDelegate {
     static let shared = LocationDelegate()
@@ -14,6 +15,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     private(set) var currentLocation: CLLocation?
     private(set) var currentTimeZone: TimeZone?
     private var kaabaBearing = CLLocationDirection()
+    private var locationName: String?
     
     var setLocationName: ((String) -> Void)?
     var setKaabaBearing: ((Double) -> Void)?
@@ -137,8 +139,27 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
                 }
                 guard !locationStr.isEmpty else { return }
                 self.setLocationName?(locationStr)
+                self.locationName = locationStr
+                self.publishToWidgets()
             }
             self.onDataShouldReload?()
+            self.publishToWidgets()
         }
+    }
+    
+    // Shares the location with the widgets (they never ask for it themselves) and
+    // refreshes them, but only when it changed enough to matter. `force` always writes
+    // and refreshes, so a widget stuck on an old "Open Salat" recovers when the app opens.
+    func publishToWidgets(force: Bool = false) {
+        guard let coord = currentLocation?.coordinate else { return }
+        let location = SharedLocation(latitude: coord.latitude, longitude: coord.longitude, name: locationName, updatedAt: Date())
+        if !force, let saved = SharedLocationStore.load(),
+           abs(saved.latitude - location.latitude) < 0.01,
+           abs(saved.longitude - location.longitude) < 0.01,
+           saved.name == location.name {
+            return
+        }
+        SharedLocationStore.save(location)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }

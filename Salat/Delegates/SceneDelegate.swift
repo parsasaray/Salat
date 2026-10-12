@@ -37,6 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // The app may have been suspended for days, so show today again
         (mainWindow?.rootViewController as? ViewController)?.refreshToNow()
         LocationDelegate.shared.startForegroundUpdates()
+        LocationDelegate.shared.publishToWidgets(force: true)
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
