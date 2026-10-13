@@ -16,7 +16,7 @@ class TimelineView: UIView {
         line.move(to: CGPoint(x: 0, y: self.frame.height/2))
         line.addLine(to: CGPoint(x: self.frame.width, y: self.frame.height/2))
         line.lineWidth = 2
-        UIColor.label.set()
+        UIColor.ink.set()
         line.stroke()
         
         if let location = LocationDelegate.shared.currentLocation {
@@ -40,7 +40,7 @@ class TimelineView: UIView {
             let interval = now.timeIntervalSince(now.startOfDay)
             let intervalRatio = (interval/86400) * self.bounds.width
             
-            let currentTimeMarker = UIImage(systemName: "sun.max.fill")?.withTintColor(.label)
+            let currentTimeMarker = UIImage(systemName: "sun.max.fill")?.withTintColor(.ink)
             currentTimeMarker?.draw(in: CGRect(x: intervalRatio - 10, y: self.frame.height/2 - 10, width: 20, height: 20))
         }
     }

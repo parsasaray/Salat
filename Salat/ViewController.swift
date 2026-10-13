@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         ])
         
         locButton.translatesAutoresizingMaskIntoConstraints = false
-        locButton.setTitleColor(.label, for: .normal)
+        locButton.setTitleColor(.ink, for: .normal)
         locButton.addTarget(self, action: #selector(pickLocation), for: .touchUpInside)
         self.view.addSubview(locButton)
         NSLayoutConstraint.activate([
@@ -98,7 +98,7 @@ class ViewController: UIViewController {
         ])
         
         dateButton.translatesAutoresizingMaskIntoConstraints = false
-        dateButton.setTitleColor(.label, for: .normal)
+        dateButton.setTitleColor(.ink, for: .normal)
         dateButton.setTitle(Date().formatted(date: .long, time: .omitted), for: .normal)
         dateButton.addTarget(self, action: #selector(pickDate), for: .touchUpInside)
         self.view.addSubview(dateButton)

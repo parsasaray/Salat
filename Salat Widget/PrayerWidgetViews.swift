@@ -19,6 +19,7 @@ struct PrayerWidgetView: View {
 
     var body: some View {
         content
+            .foregroundStyle(isAccessory ? AnyShapeStyle(.primary) : AnyShapeStyle(Theme.ink))
             .containerBackground(for: .widget) {
                 if isAccessory { Color.clear } else { Theme.background }
             }

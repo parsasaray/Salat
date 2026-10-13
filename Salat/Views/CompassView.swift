@@ -14,7 +14,7 @@ class CompassView: UIView {
     override func draw(_ rect: CGRect) {
         compassImageView.image = UIImage(systemName: "arrow.up")
         compassImageView.backgroundColor = .clear
-        compassImageView.tintColor = .label
+        compassImageView.tintColor = .ink
         compassImageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(compassImageView)
         

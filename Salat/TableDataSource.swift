@@ -33,6 +33,7 @@ class TableDataSource: NSObject, UITableViewDataSource {
         }
         cell.nameLabel.text = textStrings[indexPath.row]
         cell.nameLabel.textColor = UIColor(named: textStrings[indexPath.row])
+        cell.timeLabel.textColor = .ink
         cell.backgroundColor = .clear
            
         return cell
@@ -44,4 +45,9 @@ class Cell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var timeLabel: UILabel!
     
+}
+
+extension UIColor {
+    // Text and line color: navy in light mode, white in dark mode
+    static let ink = UIColor(named: "Ink") ?? .label
 }

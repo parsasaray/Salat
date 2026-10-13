@@ -13,6 +13,7 @@ import WidgetKit
 enum Theme {
     static let background = Color("Background")
     static let secondaryBackground = Color("Secondary Background")
+    static let ink = Color("Ink")
 
     static func color(for prayer: String) -> Color { Color(prayer) }
 
