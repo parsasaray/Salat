@@ -73,34 +73,27 @@ private struct RectangularPrayerView: View {
     let status: PrayerStatus
 
     var body: some View {
-        HStack(spacing: 8) {
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 5) {
-                    Image(systemName: PrayerSchedule.glyph(for: status.current))
-                    Text(status.current)
-                        .font(.system(size: 17, weight: .semibold))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                }
-                .widgetAccentable()
-                Text("\(status.next) · \(Theme.time(status.nextStart))")
-                    .font(.system(size: 14))
+        VStack(alignment: .leading, spacing: 3) {
+            HStack(spacing: 5) {
+                Image(systemName: PrayerSchedule.glyph(for: status.current))
+                Text(status.current)
+                    .font(.system(size: 17, weight: .semibold))
                     .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                ProgressView(timerInterval: status.currentStart...status.nextStart, countsDown: false) {
-                    EmptyView()
-                } currentValueLabel: {
-                    EmptyView()
-                }
+                    .minimumScaleFactor(0.7)
             }
-            .layoutPriority(1)
-            Spacer(minLength: 0)
-            QiblaRing(bearing: snapshot.qiblaBearing, logoScale: 0.4, lineWidth: 2.5, showsNorth: false)
-                .frame(width: 34, height: 34)
+            .widgetAccentable()
+            Text("\(status.next) · \(Theme.time(status.nextStart))")
+                .font(.system(size: 14))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+            ProgressView(timerInterval: status.currentStart...status.nextStart, countsDown: false) {
+                EmptyView()
+            } currentValueLabel: {
+                EmptyView()
+            }
         }
-        // The card's rounded corners cut into the content, so give the left edge room
-        .padding(.leading, 14)
-        .padding(.trailing, 8)
+        // The card's rounded corners cut into the content, so give the edges room
+        .padding(.horizontal, 12)
     }
 }
 
