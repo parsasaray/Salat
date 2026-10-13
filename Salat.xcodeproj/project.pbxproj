@@ -42,6 +42,12 @@
 		ED83A8182B81E8CB00D87E27 /* Salat WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = ED83A8062B81E8C700D87E27 /* Salat WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EDAB1ED0278DFF8F00BBADBF /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */; };
 		EDAF8FEA2B8336DC0024976F /* SalatTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */; };
+		ED7F00122F90000100A00001 /* ReminderPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00112F90000100A00001 /* ReminderPlanner.swift */; };
+		ED7F00132F90000100A00001 /* ReminderPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00112F90000100A00001 /* ReminderPlanner.swift */; };
+		ED7F00152F90000100A00001 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00142F90000100A00001 /* ReminderScheduler.swift */; };
+		ED7F00162F90000100A00001 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00142F90000100A00001 /* ReminderScheduler.swift */; };
+		ED7F00182F90000100A00001 /* ReminderPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00172F90000100A00001 /* ReminderPlannerTests.swift */; };
+		ED7F001A2F90000100A00001 /* ReminderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00192F90000100A00001 /* ReminderSchedulerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +117,10 @@
 		ED83A8132B81E8CB00D87E27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED83A8152B81E8CB00D87E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDAB1ECF278DFF8F00BBADBF /* LocationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
+		ED7F00112F90000100A00001 /* ReminderPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPlanner.swift; sourceTree = "<group>"; };
+		ED7F00142F90000100A00001 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
+		ED7F00172F90000100A00001 /* ReminderPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPlannerTests.swift; sourceTree = "<group>"; };
+		ED7F00192F90000100A00001 /* ReminderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +212,8 @@
 			isa = PBXGroup;
 			children = (
 				ED7F00052F90000100A00001 /* PrayerSchedule.swift */,
+				ED7F00112F90000100A00001 /* ReminderPlanner.swift */,
+				ED7F00142F90000100A00001 /* ReminderScheduler.swift */,
 				ED7F00012F90000100A00001 /* SharedLocation.swift */,
 				ED46D40D2623DFB400EB2E1C /* SalatTimes.swift */,
 				ED7E00012F90000100A00001 /* Qibla.swift */,
@@ -214,6 +226,8 @@
 			isa = PBXGroup;
 			children = (
 				ED7F000F2F90000100A00001 /* WidgetLogicTests.swift */,
+				ED7F00172F90000100A00001 /* ReminderPlannerTests.swift */,
+				ED7F00192F90000100A00001 /* ReminderSchedulerTests.swift */,
 				ED7E00062F90000100A00001 /* QiblaTests.swift */,
 				ED7E00082F90000100A00001 /* SalatTimesTests.swift */,
 			);
@@ -374,6 +388,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7F00022F90000100A00001 /* SharedLocation.swift in Sources */,
+				ED7F00122F90000100A00001 /* ReminderPlanner.swift in Sources */,
+				ED7F00152F90000100A00001 /* ReminderScheduler.swift in Sources */,
 				ED0984DC262268610001D211 /* ViewController.swift in Sources */,
 				ED387D9A28891FFF002DE53A /* TimelineView.swift in Sources */,
 				ED3D6006267C086F00352600 /* TableDataSource.swift in Sources */,
@@ -392,6 +408,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7F00102F90000100A00001 /* WidgetLogicTests.swift in Sources */,
+				ED7F00182F90000100A00001 /* ReminderPlannerTests.swift in Sources */,
+				ED7F001A2F90000100A00001 /* ReminderSchedulerTests.swift in Sources */,
+				ED7F00132F90000100A00001 /* ReminderPlanner.swift in Sources */,
+				ED7F00162F90000100A00001 /* ReminderScheduler.swift in Sources */,
 				ED7F00072F90000100A00001 /* PrayerSchedule.swift in Sources */,
 				ED7F00042F90000100A00001 /* SharedLocation.swift in Sources */,
 				ED7E00042F90000100A00001 /* SalatTimes.swift in Sources */,

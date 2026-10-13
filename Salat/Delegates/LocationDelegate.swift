@@ -16,7 +16,9 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     private(set) var currentTimeZone: TimeZone?
     private var kaabaBearing = CLLocationDirection()
     private var locationName: String?
-    
+    // Where `locationName` was resolved, so it is never attached to a different place
+    private var locationNameCoordinate: CLLocationCoordinate2D?
+
     var setLocationName: ((String) -> Void)?
     var setKaabaBearing: ((Double) -> Void)?
     var onCompassRotation: ((Double) -> Void)?
@@ -140,6 +142,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
                 guard !locationStr.isEmpty else { return }
                 self.setLocationName?(locationStr)
                 self.locationName = locationStr
+                self.locationNameCoordinate = coord
                 self.publishToWidgets()
             }
             self.onDataShouldReload?()
@@ -151,8 +154,9 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     // refreshes them, but only when it changed enough to matter. `force` always writes
     // and refreshes, so a widget stuck on an old "Open Salat" recovers when the app opens.
     func publishToWidgets(force: Bool = false) {
+        refreshReminders()
         guard let coord = currentLocation?.coordinate else { return }
-        let location = SharedLocation(latitude: coord.latitude, longitude: coord.longitude, name: locationName, updatedAt: Date())
+        let location = SharedLocation(latitude: coord.latitude, longitude: coord.longitude, name: knownName(at: coord), updatedAt: Date())
         if !force, let saved = SharedLocationStore.load(),
            abs(saved.latitude - location.latitude) < 0.01,
            abs(saved.longitude - location.longitude) < 0.01,
@@ -161,5 +165,35 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
         }
         SharedLocationStore.save(location)
         WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    // Keeps the prayer reminders in step with where the user is. This runs on every launch,
+    // foreground and location change, which is what keeps the reminders from running out.
+    // Before the first fix of a launch it replans from the last saved location instead.
+    private func refreshReminders() {
+        if let coord = currentLocation?.coordinate {
+            ReminderScheduler.shared.reconcile(for: SharedLocation(latitude: coord.latitude, longitude: coord.longitude,
+                                                                   name: knownName(at: coord), updatedAt: Date()))
+        } else if let saved = SharedLocationStore.load() {
+            ReminderScheduler.shared.reconcile(for: saved)
+        }
+    }
+    
+    // The city name resolves after the fix does, so it is only used for the place it was
+    // resolved for. Falls back to the saved name for the same place (e.g. while offline), and
+    // otherwise to nil rather than naming the wrong city.
+    private func knownName(at coord: CLLocationCoordinate2D) -> String? {
+        if let name = locationName, let at = locationNameCoordinate, isSamePlace(at, coord) {
+            return name
+        }
+        if let saved = SharedLocationStore.load(),
+           isSamePlace(CLLocationCoordinate2D(latitude: saved.latitude, longitude: saved.longitude), coord) {
+            return saved.name
+        }
+        return nil
+    }
+    
+    private func isSamePlace(_ a: CLLocationCoordinate2D, _ b: CLLocationCoordinate2D) -> Bool {
+        abs(a.latitude - b.latitude) < 0.01 && abs(a.longitude - b.longitude) < 0.01
     }
 }
