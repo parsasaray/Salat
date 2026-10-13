@@ -54,7 +54,8 @@ struct PrayerNameText: View {
     }
 }
 
-/// The thin line across the day with a colored dot per prayer and the sun at the entry's time
+/// The day's line, flat: solid up to the entry's time and dotted after it, a filled dot for each
+/// prayer that has passed and an empty ring for each still to come, and the sun at the entry's time
 struct TimelineBar: View {
     let snapshot: PrayerSnapshot
     var dotSize: CGFloat = 10
@@ -69,15 +70,24 @@ struct TimelineBar: View {
         GeometryReader { proxy in
             let width = proxy.size.width
             let midY = proxy.size.height / 2
+            let nowX = fraction(of: snapshot.date) * width
             ZStack {
-                Capsule()
-                    .fill(.primary)
-                    .frame(width: width, height: 2)
-                    .position(x: width / 2, y: midY)
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: midY))
+                    path.addLine(to: CGPoint(x: nowX, y: midY))
+                }
+                .stroke(.primary, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                Path { path in
+                    path.move(to: CGPoint(x: nowX, y: midY))
+                    path.addLine(to: CGPoint(x: width, y: midY))
+                }
+                .stroke(.primary.opacity(0.4), style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [0.1, 6]))
                 ForEach(snapshot.rows, id: \.name) { row in
                     if let date = row.date {
+                        let passed = date <= snapshot.date
                         Circle()
-                            .fill(Theme.color(for: row.name))
+                            .strokeBorder(Theme.color(for: row.name), lineWidth: 2)
+                            .background(Circle().fill(passed ? Theme.color(for: row.name) : Theme.background))
                             .frame(width: dotSize, height: dotSize)
                             .position(x: fraction(of: date) * width, y: midY)
                     }
@@ -87,7 +97,7 @@ struct TimelineBar: View {
                     .scaledToFit()
                     .frame(width: sunSize, height: sunSize)
                     .widgetAccentable()
-                    .position(x: fraction(of: snapshot.date) * width, y: midY)
+                    .position(x: nowX, y: midY)
             }
         }
         .frame(height: max(dotSize, sunSize) + 4)

@@ -54,24 +54,25 @@ class ViewController: UIViewController {
 //            settingsButton.heightAnchor.constraint(equalToConstant: 30)
 //        ])
         
-        timelineView.translatesAutoresizingMaskIntoConstraints = false
-        timelineView.backgroundColor = .clear
-        self.view.addSubview(timelineView)
-        NSLayoutConstraint.activate([
-            timelineView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 25),
-            timelineView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            timelineView.widthAnchor.constraint(equalTo: tableView.widthAnchor),
-            timelineView.heightAnchor.constraint(equalToConstant: 20)
-        ])
-        
         compassView.translatesAutoresizingMaskIntoConstraints = false
         compassView.backgroundColor = .clear
         self.view.addSubview(compassView)
         NSLayoutConstraint.activate([
-            compassView.topAnchor.constraint(equalTo: timelineView.bottomAnchor, constant: 40),
+            compassView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 85),
             compassView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             compassView.widthAnchor.constraint(equalTo: tableView.widthAnchor, multiplier: 0.5),
             compassView.heightAnchor.constraint(equalTo: tableView.widthAnchor, multiplier: 0.5)
+        ])
+        
+        timelineView.translatesAutoresizingMaskIntoConstraints = false
+        timelineView.backgroundColor = .clear
+        self.view.addSubview(timelineView)
+        NSLayoutConstraint.activate([
+            // The timeline arcs over the compass, so it starts above it
+            timelineView.topAnchor.constraint(equalTo: compassView.topAnchor, constant: -TimelineView.compassTop),
+            timelineView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            timelineView.widthAnchor.constraint(equalTo: tableView.widthAnchor),
+            timelineView.heightAnchor.constraint(equalToConstant: TimelineView.height)
         ])
         
         locButton.translatesAutoresizingMaskIntoConstraints = false

@@ -48,6 +48,9 @@
 		ED7F00162F90000100A00001 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00142F90000100A00001 /* ReminderScheduler.swift */; };
 		ED7F00182F90000100A00001 /* ReminderPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00172F90000100A00001 /* ReminderPlannerTests.swift */; };
 		ED7F001A2F90000100A00001 /* ReminderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00192F90000100A00001 /* ReminderSchedulerTests.swift */; };
+		ED7F00312F90000100A00001 /* DayTimelineLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00302F90000100A00001 /* DayTimelineLayout.swift */; };
+		ED7F00332F90000100A00001 /* DayTimelineLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00302F90000100A00001 /* DayTimelineLayout.swift */; };
+		ED7F00352F90000100A00001 /* DayTimelineLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F00342F90000100A00001 /* DayTimelineLayoutTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +124,8 @@
 		ED7F00142F90000100A00001 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
 		ED7F00172F90000100A00001 /* ReminderPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPlannerTests.swift; sourceTree = "<group>"; };
 		ED7F00192F90000100A00001 /* ReminderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSchedulerTests.swift; sourceTree = "<group>"; };
+		ED7F00302F90000100A00001 /* DayTimelineLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTimelineLayout.swift; sourceTree = "<group>"; };
+		ED7F00342F90000100A00001 /* DayTimelineLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTimelineLayoutTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +216,7 @@
 		ED46D40C2623DF9C00EB2E1C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				ED7F00302F90000100A00001 /* DayTimelineLayout.swift */,
 				ED7F00052F90000100A00001 /* PrayerSchedule.swift */,
 				ED7F00112F90000100A00001 /* ReminderPlanner.swift */,
 				ED7F00142F90000100A00001 /* ReminderScheduler.swift */,
@@ -225,6 +231,7 @@
 		ED7E000B2F90000100A00001 /* SalatTests */ = {
 			isa = PBXGroup;
 			children = (
+				ED7F00342F90000100A00001 /* DayTimelineLayoutTests.swift */,
 				ED7F000F2F90000100A00001 /* WidgetLogicTests.swift */,
 				ED7F00172F90000100A00001 /* ReminderPlannerTests.swift */,
 				ED7F00192F90000100A00001 /* ReminderSchedulerTests.swift */,
@@ -388,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7F00022F90000100A00001 /* SharedLocation.swift in Sources */,
+				ED7F00312F90000100A00001 /* DayTimelineLayout.swift in Sources */,
 				ED7F00122F90000100A00001 /* ReminderPlanner.swift in Sources */,
 				ED7F00152F90000100A00001 /* ReminderScheduler.swift in Sources */,
 				ED0984DC262268610001D211 /* ViewController.swift in Sources */,
@@ -408,6 +416,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED7F00102F90000100A00001 /* WidgetLogicTests.swift in Sources */,
+				ED7F00352F90000100A00001 /* DayTimelineLayoutTests.swift in Sources */,
+				ED7F00332F90000100A00001 /* DayTimelineLayout.swift in Sources */,
 				ED7F00182F90000100A00001 /* ReminderPlannerTests.swift in Sources */,
 				ED7F001A2F90000100A00001 /* ReminderSchedulerTests.swift in Sources */,
 				ED7F00132F90000100A00001 /* ReminderPlanner.swift in Sources */,
