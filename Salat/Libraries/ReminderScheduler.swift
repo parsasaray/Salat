@@ -38,7 +38,8 @@ struct UserNotificationStore: ReminderStore {
                       let trigger = request.trigger as? UNCalendarNotificationTrigger,
                       let date = trigger.nextTriggerDate() else { return nil }
                 return PlannedReminder(identifier: request.identifier, fireDate: date,
-                                       title: request.content.title, body: request.content.body)
+                                       title: request.content.title, body: request.content.body,
+                                       isTimeSensitive: request.content.interruptionLevel == .timeSensitive)
             })
         }
     }
@@ -54,6 +55,9 @@ struct UserNotificationStore: ReminderStore {
             content.title = reminder.title
             content.body = reminder.body
             content.sound = .default
+            if reminder.isTimeSensitive {
+                content.interruptionLevel = .timeSensitive
+            }
             // Pinning the time zone keeps the fire time an absolute moment if the user travels
             let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone],
                                                              from: reminder.fireDate)

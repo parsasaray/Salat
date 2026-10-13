@@ -142,6 +142,28 @@ final class ReminderPlannerTests: XCTestCase {
         XCTAssertTrue(ReminderPlanner.plan(for: sf, now: now, calendar: cal, limit: 1).isEmpty)
     }
 
+    // MARK: - Time Sensitive
+
+    func testPrayerRemindersAreTimeSensitiveAndTheNudgeIsNot() {
+        let cal = calendar("America/Los_Angeles")
+        let now = date(2026, 10, 11, 17, 0, in: cal)
+        let plan = ReminderPlanner.plan(for: sf, now: now, calendar: cal)
+        let prayers = prayerReminders(plan)
+        XCTAssertFalse(prayers.isEmpty)
+        XCTAssertTrue(prayers.allSatisfy(\.isTimeSensitive))
+        XCTAssertEqual(plan.first { $0.identifier == ReminderPlanner.nudgeIdentifier }?.isTimeSensitive, false)
+    }
+
+    func testRemindersScheduledBeforeTimeSensitivityGetReplaced() {
+        let cal = calendar("America/Los_Angeles")
+        let now = date(2026, 10, 11, 17, 0, in: cal)
+        let plan = ReminderPlanner.plan(for: sf, now: now, calendar: cal)
+        let old = plan.map {
+            PlannedReminder(identifier: $0.identifier, fireDate: $0.fireDate, title: $0.title, body: $0.body, isTimeSensitive: false)
+        }
+        XCTAssertFalse(ReminderPlanner.isEquivalent(old, plan))
+    }
+
     // MARK: - Equivalence
 
     func testSmallDriftIsEquivalentButDifferentTextIsNot() {
@@ -149,7 +171,7 @@ final class ReminderPlannerTests: XCTestCase {
         let now = date(2026, 10, 11, 17, 0, in: cal)
         let plan = ReminderPlanner.plan(for: sf, now: now, calendar: cal)
         func shifted(by seconds: TimeInterval) -> [PlannedReminder] {
-            plan.map { PlannedReminder(identifier: $0.identifier, fireDate: $0.fireDate.addingTimeInterval(seconds), title: $0.title, body: $0.body) }
+            plan.map { PlannedReminder(identifier: $0.identifier, fireDate: $0.fireDate.addingTimeInterval(seconds), title: $0.title, body: $0.body, isTimeSensitive: $0.isTimeSensitive) }
         }
         XCTAssertTrue(ReminderPlanner.isEquivalent(plan, shifted(by: 10)))
         XCTAssertFalse(ReminderPlanner.isEquivalent(plan, shifted(by: 120)))

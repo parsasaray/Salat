@@ -17,6 +17,8 @@ struct PlannedReminder: Equatable {
     let fireDate: Date
     let title: String
     let body: String
+    /// Prayer reminders break through Focus and scheduled summaries; the nudge does not
+    var isTimeSensitive = true
 }
 
 enum ReminderPlanner {
@@ -96,7 +98,8 @@ enum ReminderPlanner {
         guard let date = fireDate else { return nil }
         return PlannedReminder(identifier: nudgeIdentifier, fireDate: date,
                                title: "Open Salat to keep reminders going",
-                               body: "Prayer reminders will stop soon unless Salat is opened.")
+                               body: "Prayer reminders will stop soon unless Salat is opened.",
+                               isTimeSensitive: false)
     }
 
     /// Whether `pending` already matches `planned`, allowing a few seconds of drift in the
@@ -107,7 +110,8 @@ enum ReminderPlanner {
         let a = pending.sorted { $0.fireDate < $1.fireDate }
         let b = planned.sorted { $0.fireDate < $1.fireDate }
         return zip(a, b).allSatisfy {
-            $0.title == $1.title && $0.body == $1.body && abs($0.fireDate.timeIntervalSince($1.fireDate)) <= tolerance
+            $0.title == $1.title && $0.body == $1.body && $0.isTimeSensitive == $1.isTimeSensitive
+                && abs($0.fireDate.timeIntervalSince($1.fireDate)) <= tolerance
         }
     }
 }
