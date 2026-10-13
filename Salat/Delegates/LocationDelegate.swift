@@ -19,7 +19,8 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
     // Where `locationName` was resolved, so it is never attached to a different place
     private var locationNameCoordinate: CLLocationCoordinate2D?
 
-    var setLocationName: ((String) -> Void)?
+    /// The place's name from longest to shortest, so a narrow display can pick the one that fits
+    var setLocationName: (([String]) -> Void)?
     var setKaabaBearing: ((Double) -> Void)?
     var onCompassRotation: ((Double) -> Void)?
     var onDataShouldReload: (() -> Void)?
@@ -130,17 +131,25 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate {
             nf.maximumSignificantDigits = 6
             let lat = nf.string(for: coord.latitude) ?? "\(coord.latitude)"
             let lon = nf.string(for: coord.longitude) ?? "\(coord.longitude)"
-            self.setLocationName?("\(lat)°, \(lon)°")
+            self.setLocationName?(["\(lat)°, \(lon)°"])
             
             CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (placemarks, error) in
                 var locationStr = ""
+                var variants = [String]()
                 if let place = placemarks?.first {
                     if let city = place.locality { locationStr += city + ", " }
                     if let area = place.administrativeArea { locationStr += area + " "}
                     if let country = place.isoCountryCode { locationStr += country}
+                    // Shortened by dropping the country, then the state or province
+                    let city = place.locality, area = place.administrativeArea
+                    variants = [locationStr.trimmingCharacters(in: CharacterSet(charactersIn: ", ")),
+                                [city, area].compactMap { $0 }.joined(separator: ", "),
+                                city ?? area ?? ""]
+                        .filter { !$0.isEmpty }
+                        .reduce(into: [String]()) { if !$0.contains($1) { $0.append($1) } }
                 }
                 guard !locationStr.isEmpty else { return }
-                self.setLocationName?(locationStr)
+                self.setLocationName?(variants)
                 self.locationName = locationStr
                 self.locationNameCoordinate = coord
                 self.publishToWidgets()

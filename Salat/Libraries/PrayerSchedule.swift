@@ -76,6 +76,25 @@ enum PrayerSchedule {
         return PrayerStatus(current: current.name, currentStart: current.date, next: next.name, nextStart: next.date)
     }
 
+    /// The prayer in effect at `date` at this place and the one after it
+    static func status(at date: Date,
+                       latitude: Double,
+                       longitude: Double,
+                       calendar: Calendar = .current) -> PrayerStatus? {
+        let salat = SalatTimes()
+        let startOfToday = calendar.startOfDay(for: date)
+        var moments: [PrayerMoment] = []
+        for offset in -1...1 {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: startOfToday) else { continue }
+            let times = salat.getTimes(date: day, lat: latitude, lng: longitude, calendar: calendar)
+            for name in names {
+                if let time = times[name] { moments.append(PrayerMoment(name: name, date: time)) }
+            }
+        }
+        moments.sort { $0.date < $1.date }
+        return status(at: date, moments: moments)
+    }
+
     /// Snapshots from `now` through `horizon`: one at every prayer, one at every midnight
     /// (so the table rolls over to the new day), and one every `step` so the day's timeline
     /// marker and gauges keep moving.
